@@ -1117,6 +1117,10 @@
                 }), 0);
             }
         }
+        window.addEventListener("resize", (() => {
+            const sections = document.querySelectorAll(".page [data-fullscreen][id]");
+            sections.length ? sections.forEach((section => section.style.height = "100vh")) : "";
+        }));
         const player = document.querySelector(".video-service__wrapper");
         if (player) {
             const video = player.querySelector(".video-service__video");
