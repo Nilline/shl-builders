@@ -873,6 +873,441 @@
                 }
             }
         }
+        const sections = document.querySelectorAll(".page [data-fullscreen][id]");
+        function qe(name) {
+            return document.querySelector(`${name}`);
+        }
+        function qea(name) {
+            return document.querySelectorAll(`${name}`);
+        }
+        if (sections.length) {
+            function blocksVisibility(name, twoName) {
+                sections.forEach((section => {
+                    const stylesHidden = () => {
+                        section.style.opacity = 0;
+                        section.style.visibility = "hidden";
+                    };
+                    const stylesVisible = () => {
+                        section.style.visibility = "visible";
+                    };
+                    if (name && !twoName) !section.closest(`${name}`) ? stylesHidden() : stylesVisible();
+                    if (twoName) !section.closest(`${name}`) && !section.closest(`${twoName}`) ? stylesHidden() : stylesVisible();
+                }));
+            }
+            window.addEventListener("load", documentLoad);
+            function documentLoad() {
+                setTimeout((() => {
+                    const h = document.documentElement.clientHeight;
+                    const w = window.innerWidth;
+                    window.scrollTo(0, 0);
+                    qea(".advantages__box").forEach(((block, i) => {
+                        block.querySelector(".advantages__description").style.opacity = 0;
+                        block.querySelector(".advantages__picture").style.transform = `translateX(${(w - 1.2 * w) / 2 - (w - 1.2 * w) / 2 / 100 + "px"})`;
+                        block.querySelector(".advantages__picture").style.opacity = 0;
+                    }));
+                    window.addEventListener("scroll", actionsScroll);
+                    function actionsScroll(e) {
+                        let scroll = window.scrollY;
+                        qe("#sc1").parentElement.style.paddingBottom = qe("#sc1").offsetHeight + "px";
+                        qe("#sc2").parentElement.style.paddingBottom = 2 * qe("#sc2").offsetHeight + "px";
+                        qe("#sc4").parentElement.style.paddingBottom = 2 * qe("#sc4").offsetHeight + "px";
+                        qe("#sc5").parentElement.style.paddingBottom = 2 * qe("#sc5").offsetHeight + "px";
+                        qe("#sc6").parentElement.style.paddingBottom = qe("#sc6").offsetHeight + "px";
+                        qe("#sc7").parentElement.style.paddingBottom = qe("#sc7").offsetHeight + "px";
+                        qe("#sc8").parentElement.style.paddingBottom = qe("#sc8").offsetHeight + "px";
+                        qe("#sc9").parentElement.style.paddingBottom = 2 * qe("#sc9").offsetHeight + "px";
+                        if (scroll < qe("#sc1").offsetHeight) {
+                            let scr = scroll - qe("#sc1").offsetTop;
+                            let scrProc = scr / qe("#sc1").offsetHeight * 100;
+                            qe("#sc2").classList.remove("fixed");
+                            blocksVisibility("#sc1");
+                            qe("#sc1").classList.add("fixed");
+                            qe("#sc1").style.opacity = 1 - scrProc / 100;
+                        } else qe("#sc1").classList.remove("fixed");
+                        if (scroll > qe("#sc2").offsetHeight + qe("#sc2").offsetTop && scroll < qe("#sc4").parentElement.offsetTop) {
+                            let scr = scroll - (qe("#sc2").offsetTop + qe("#sc2").offsetHeight);
+                            let scrProc = scr / qe("#sc2").offsetHeight * 100;
+                            qe("#sc2").parentElement.style.removeProperty("padding-top");
+                            qe("#sc2").classList.add("fixed");
+                            qe("#sc2").style.opacity = 1;
+                            qe(".introduction__title").style.transform = `translateY(${h / 1.5 + "px"})`;
+                            qe(".introduction__description").style.transform = `translateY(${h / 1.5 + "px"})`;
+                            qe(".introduction__btn-box").style.transform = `translateY(${h / 1.5 + "px"})`;
+                            qe("#sc4").classList.remove("fixed");
+                            blocksVisibility("#sc2", "#sc3");
+                            if (scrProc < 25) qe(".introduction__title").style.transform = `translateY(${h / 1.5 - h / 1.5 / 100 * (4 * scrProc) + "px"})`; else if (scrProc > 25 && scrProc < 100) qe(".introduction__title").style.removeProperty("transform");
+                            if (scrProc > 25 && scrProc < 50) qe(".introduction__description").style.transform = `translateY(${h / 1.5 - h / 1.5 / 100 * (4 * (scrProc - 25)) + "px"})`; else if (scrProc > 50) qe(".introduction__description").style.removeProperty("transform");
+                            if (scrProc > 30 && scrProc < 60) qe(".introduction__btn-box").style.transform = `translateY(${h / 1.5 - h / 1.5 / 100 * (3.33 * (scrProc - 30)) + "px"})`; else if (scrProc > 60) qe(".introduction__btn-box").style.removeProperty("transform");
+                            if (scrProc > 100 && scrProc < 150) {
+                                qe("#sc3").style.opacity = 1;
+                                qe("#sc3").style.position = "fixed";
+                                qe(".introduction__description").style.opacity = 0;
+                                qe(".introduction__btn-box").style.opacity = 0;
+                                qe(".introduction__title").style.transform = `scale(${2 * (1 + 65 / 100 * (scrProc - 100))})`;
+                            } else if (scrProc < 100) {
+                                qe("#sc3").style.opacity = 0;
+                                qe("#sc3").style.position = "absolute";
+                                qe(".introduction__description").style.removeProperty("opacity");
+                                qe(".introduction__btn-box").style.removeProperty("opacity");
+                            }
+                            if (scrProc > 125 && scrProc < 150) qe("#sc2").style.opacity = 1 - 1 / 25 * (scrProc - 125); else if (scrProc > 150) qe("#sc2").style.opacity = 0;
+                            if (scrProc > 175 && scrProc < 200) {
+                                qe("#sc3").style.opacity = 1 - 1 / 25 * (scrProc - 175);
+                                qe("#sc3").style.zIndex = 1;
+                                qe("body").style.backgroundColor = "#000";
+                                qe("#sc3").style.position = "fixed";
+                            } else if (scrProc < 175) {
+                                qe("#sc3").style.zIndex = -1;
+                                qe("body").style.removeProperty("background-color");
+                            }
+                        }
+                        if (scroll > qe("#sc4").parentElement.offsetTop && scroll < qe("#sc5").parentElement.offsetTop - qe("#sc5").offsetHeight) {
+                            let scr = scroll - qe("#sc4").parentElement.offsetTop;
+                            let scrProc = scr / qe("#sc4").offsetHeight * 100;
+                            blocksVisibility("#sc4");
+                            qe("body").style.backgroundColor = "#000";
+                            qe("#sc3").style.position = "absolute";
+                            qe("#sc4").classList.add("fixed");
+                            qe(".promise__title").style.transform = `translateX(${(w - 2 * w) / 1.35 - (w - 2 * w) / 1.35 / 100 + "px"})`;
+                            qe(".promise__cover-btn").style.transform = `translateX(${(w - 2 * w) / 1.35 - (w - 2 * w) / 1.35 / 100 + "px"})`;
+                            if (scrProc < 25) qe("#sc4").style.opacity = 0 + 1 / 25 * scrProc; else if (scrProc > 150) ; else qe("#sc4").style.opacity = 1;
+                            if (scrProc < 150) qe(".promise__container").style.removeProperty("transform");
+                            if (scrProc > 25 && scrProc < 50) qe(".promise__title").style.transform = `translateX(${(w - 2 * w) / 2 - (w - 2 * w) / 2 / 100 * (4 * (scrProc - 25)) + "px"})`; else if (scrProc > 50) qe(".promise__title").style.removeProperty("transform");
+                            if (scrProc < 50) qea(".promise__pragraph").forEach((p => p.style.transform = `translateY(${h / 1.35 / 100 * 100 + "px"})`));
+                            if (scrProc > 50 && scrProc < 100) qea(".promise__pragraph").forEach(((p, i) => {
+                                if (scrProc > 50 && scrProc < 60) {
+                                    if (0 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 50)) + "px"})`;
+                                } else if (scrProc > 60 && scrProc < 70) {
+                                    if (0 == i) p.style.removeProperty("transform");
+                                    if (1 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 60)) + "px"})`;
+                                } else if (scrProc > 70 && scrProc < 80) {
+                                    if (1 == i) p.style.removeProperty("transform");
+                                    if (2 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 70)) + "px"})`;
+                                } else if (scrProc > 80 && scrProc < 90) {
+                                    if (2 == i) p.style.removeProperty("transform");
+                                    if (3 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 80)) + "px"})`;
+                                } else if (scrProc > 90 && scrProc < 100) {
+                                    qe(".promise__cover-btn").style.transform = `translateX(${(w - 2 * w) / 2 - (w - 2 * w) / 2 / 100 * (10 * (scrProc - 90)) + "px"})`;
+                                    if (3 == i) p.style.removeProperty("transform");
+                                } else if (scrProc > 100) {
+                                    qe(".promise__cover-btn").style.removeProperty("transform");
+                                    p.style.removeProperty("transform");
+                                }
+                            }));
+                        }
+                        if (scroll > qe("#sc4").parentElement.offsetTop + (qe("#sc4").parentElement.offsetHeight - qe("#sc4").offsetHeight) && scroll < qe("#sc5").parentElement.offsetTop) {
+                            let scr = scroll - qe("#sc4").parentElement.offsetTop;
+                            let scrProc = scr / qe("#sc4").offsetHeight * 100;
+                            blocksVisibility("#sc4");
+                            qea(".promise__pragraph").forEach(((p, i) => {
+                                p.style.removeProperty("transform");
+                            }));
+                            qe(".promise__title").style.removeProperty("transform");
+                            qe(".promise__cover-btn").style.removeProperty("transform");
+                            if (scrProc > 25) qe(".promise__container").style.removeProperty("transform");
+                            if (scrProc - 100 > 25) {
+                                qe(".promise__container").style.transform = `translateY(-${h / 100 * (1.5 * (scrProc - 125)) + "px"})`;
+                                qe("#sc4").style.opacity = 1 - 1 / 75 * (scrProc - 125);
+                            }
+                            qe("#sc5").style.opacity = 0;
+                        } else if (scroll > qe("#sc5").parentElement.offsetTop && scroll < qe("#sc6").parentElement.offsetTop) {
+                            let scr = scroll - qe("#sc5").parentElement.offsetTop;
+                            let scrProc = scr / qe("#sc5").offsetHeight * 100;
+                            blocksVisibility("#sc5");
+                            qe("#sc5").classList.add("fixed");
+                            if (scrProc < 50) qe("body").style.backgroundColor = "#000"; else if (scrProc > 50) qe("body").style.backgroundColor = "#fff";
+                            if (scrProc < 30) qe("#sc5").style.opacity = 0 + 1 / 30 * scrProc; else if (scrProc > 30 && scrProc < 70) qe("#sc5").style.opacity = 1; else if (scrProc > 70 && scrProc < 100) qe("#sc5").style.opacity = 1 - 1 / 30 * (scrProc - 70);
+                        }
+                        if (scroll > qe("#sc5").parentElement.offsetTop + (qe("#sc5").parentElement.offsetHeight - qe("#sc5").offsetHeight) && scroll < qe("#sc7").parentElement.offsetTop) {
+                            let scr = scroll - qe("#sc6").parentElement.offsetTop + qe("#sc6").offsetHeight;
+                            let scrProc = scr / qe("#sc6").offsetHeight * 100;
+                            blocksVisibility("#sc6");
+                            qe("#sc6").classList.add("fixed");
+                            if (scrProc < 30) qe("#sc6").style.opacity = 0 + 1 / 30 * scrProc;
+                            qea(".advantages__box").forEach(((block, i) => {
+                                if (scrProc < 30) block.querySelector(".advantages__description").style.opacity = 0;
+                                if (scrProc > 30) {
+                                    qe("#sc6").style.opacity = 1;
+                                    qe("body").style.backgroundColor = "#000";
+                                    if (scrProc > 30 && scrProc < 50) if (0 == i) {
+                                        block.querySelector(".advantages__description").style.opacity = 0 + 1 / 20 * (scrProc - 30);
+                                        block.querySelector(".advantages__picture").style.opacity = 0 + 1 / 15 * (scrProc - 35);
+                                        block.querySelector(".advantages__picture").style.transform = `translateX(${Math.round(-90 + 90 / 15 * (scrProc - 35)) + "px"})`;
+                                    } else if (1 == i) block.querySelector(".advantages__description").style.opacity = 0; else if (2 == i) block.querySelector(".advantages__description").style.opacity = 0;
+                                    if (scrProc > 50 && scrProc < 70) if (1 == i) {
+                                        block.querySelector(".advantages__description").style.opacity = 0 + 1 / 20 * (scrProc - 50);
+                                        block.querySelector(".advantages__picture").style.opacity = 0 + 1 / 15 * (scrProc - 55);
+                                        block.querySelector(".advantages__picture").style.transform = `translateX(${Math.round(-90 + 90 / 15 * (scrProc - 55)) + "px"})`;
+                                    } else if (0 == i) block.querySelector(".advantages__description").style.opacity = 1; else if (2 == i) block.querySelector(".advantages__description").style.opacity = 0;
+                                    if (scrProc > 70 && scrProc < 90) if (2 == i) {
+                                        block.querySelector(".advantages__description").style.opacity = 0 + 1 / 20 * (scrProc - 70);
+                                        block.querySelector(".advantages__picture").style.opacity = 0 + 1 / 15 * (scrProc - 75);
+                                        block.querySelector(".advantages__picture").style.transform = `translateX(${Math.round(-90 + 90 / 15 * (scrProc - 75)) + "px"})`;
+                                    } else if (1 == i) block.querySelector(".advantages__description").style.opacity = 1;
+                                    if (scrProc > 90 && scrProc < 110) block.querySelector(".advantages__description").style.opacity = 1;
+                                    if (scrProc > 110 && scrProc < 130) if (0 == i) {
+                                        block.querySelector(".advantages__picture").style.transform = `translateX(${Math.round(0 - 90 / 15 * (scrProc - 110)) + "px"})`;
+                                        block.querySelector(".advantages__picture").style.opacity = 1 - 1 / 15 * (scrProc - 110);
+                                        block.querySelector(".advantages__description").style.opacity = 1 - 1 / 20 * (scrProc - 110);
+                                    }
+                                    if (scrProc > 130 && scrProc < 150) {
+                                        if (1 == i) {
+                                            block.querySelector(".advantages__picture").style.transform = `translateX(${Math.round(0 - 90 / 15 * (scrProc - 130)) + "px"})`;
+                                            block.querySelector(".advantages__picture").style.opacity = 1 - 1 / 15 * (scrProc - 130);
+                                            block.querySelector(".advantages__description").style.opacity = 1 - 1 / 20 * (scrProc - 130);
+                                        }
+                                        if (0 == i) block.querySelector(".advantages__description").style.opacity = 0;
+                                    }
+                                    if (scrProc > 150 && scrProc < 170) {
+                                        if (2 == i) {
+                                            block.querySelector(".advantages__picture").style.transform = `translateX(${Math.round(0 - 90 / 15 * (scrProc - 150)) + "px"})`;
+                                            block.querySelector(".advantages__picture").style.opacity = 1 - 1 / 15 * (scrProc - 150);
+                                            block.querySelector(".advantages__description").style.opacity = 1 - 1 / 20 * (scrProc - 150);
+                                        }
+                                        if (1 == i) block.querySelector(".advantages__description").style.opacity = 0;
+                                    }
+                                    if (scrProc > 170 && scrProc < 200) {
+                                        block.querySelector(".advantages__description").style.opacity = 0;
+                                        qe("#sc6").style.opacity = 1 - 1 / 30 * (scrProc - 170);
+                                    }
+                                }
+                            }));
+                        }
+                        if (scroll > qe("#sc6").parentElement.offsetTop + qe("#sc6").parentElement.offsetHeight && scroll < qe("#sc8").parentElement.offsetTop) {
+                            let scr = scroll - qe("#sc7").parentElement.offsetTop;
+                            let scrProc = scr / qe("#sc7").offsetHeight * 100;
+                            blocksVisibility("#sc7");
+                            qe("#sc7").classList.add("fixed");
+                            scrProc > 50 ? qe("body").style.backgroundColor = "#fff" : qe("body").style.backgroundColor = "#000";
+                            if (scrProc < 30) qe("#sc7").style.opacity = 0 + 1 / 30 * scrProc; else if (scrProc > 30 && scrProc < 70) qe("#sc7").style.opacity = 1; else if (scrProc > 70 && scrProc < 100) qe("#sc7").style.opacity = 1 - 1 / 30 * (scrProc - 70);
+                        }
+                        if (scroll > qe("#sc7").parentElement.offsetTop + qe("#sc7").parentElement.offsetHeight && scroll < qe("#sc9").parentElement.offsetTop) {
+                            let scr = scroll - qe("#sc8").parentElement.offsetTop;
+                            let scrProc = scr / qe("#sc8").offsetHeight * 100;
+                            blocksVisibility("#sc8");
+                            qe("#sc8").classList.add("fixed");
+                            scrProc > 50 ? qe("body").style.backgroundColor = "#000" : qe("body").style.backgroundColor = "#fff";
+                            if (scrProc < 30) {
+                                qe(".team__content").style.transform = `translateY(${Math.round(h / 1.35 - h / 1.35 / 20) + "px"})`;
+                                qe("#sc8").style.opacity = 0 + 1 / 30 * scrProc;
+                            } else if (scrProc > 30 && scrProc < 70) {
+                                if (scrProc > 30 && scrProc < 45) qe(".team__content").style.transform = `translateY(${Math.round(h / 1.35 - h / 1.35 / 15 * (scrProc - 30)) + "px"})`; else if (scrProc > 45 && scrProc < 55) qe(".team__content").style.transform = `translateY(0)`; else if (scrProc > 55 && scrProc < 70) qe(".team__content").style.transform = `translateY(${Math.round(0 - h / 1.35 / 15 * (scrProc - 55)) + "px"})`;
+                                qe("#sc8").style.opacity = 1;
+                            } else if (scrProc > 70 && scrProc < 100) qe("#sc8").style.opacity = 1 - 1 / 30 * (scrProc - 70);
+                        }
+                        if (scroll > qe("#sc8").parentElement.offsetTop + qe("#sc8").parentElement.offsetHeight && scroll < qe(".footer").offsetTop) {
+                            let scr = scroll - qe("#sc9").parentElement.offsetTop;
+                            let scrProc = scr / qe("#sc9").offsetHeight * 100;
+                            blocksVisibility("#sc9");
+                            if (scrProc > 0 && scrProc < 100) {
+                                qe("#sc9").classList.add("fixed");
+                                qe("#sc9").style.removeProperty("position");
+                                qe("#sc9").style.removeProperty("top");
+                                qe("#sc9").style.removeProperty("bottom");
+                            }
+                            if (scrProc < 30) qe("#sc9").style.opacity = 0 + 1 / 30 * scrProc; else if (scrProc > 30) qe("#sc9").style.opacity = 1;
+                            if (scrProc > 100) {
+                                qe("#sc9").style.position = "absolute";
+                                qe("#sc9").style.top = "auto";
+                                qe("#sc9").style.bottom = 0 + qe(".footer").offsetHeight + "px";
+                            }
+                        }
+                    }
+                    actionsScroll();
+                }), 0);
+            }
+        }
+        const player = document.querySelector(".video-service__wrapper");
+        if (player) {
+            const video = player.querySelector(".video-service__video");
+            const videoButton = player.querySelector(".video-service__button");
+            videoButton.addEventListener("click", (e => {
+                if (video.paused) {
+                    video.play();
+                    e.target.classList.add("video-service__button_played");
+                } else if (!video.paused) {
+                    video.pause();
+                    e.target.classList.remove("video-service__button_played");
+                } else if (video.onended) e.target.classList.remove("video-service__button_played");
+            }));
+        }
+        if (document.querySelector(".mobile-menu__item_big")) {
+            const menuBigItems = document.querySelectorAll(".mobile-menu__item_big");
+            menuBigItems[menuBigItems.length - 1].classList.add("mobile-menu__item_last");
+        }
+        const menuBtn = document.querySelector(".header__burger");
+        const script_menuClose = document.querySelector(".mobile-menu__burger");
+        const headerContainer = document.querySelector(".header__container");
+        const headerMenu = document.querySelector(".header__menu");
+        const headerButtons = document.querySelector(".header__buttons");
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const mobileMenuCallback = document.querySelector(".mobile-menu__button");
+        const mobileFormSummon = document.querySelector(".callback");
+        const mobileMenuForm = document.querySelector(".mobile-menu__form");
+        const formButton = document.querySelector(".form__button");
+        let script_innerWidth = window.innerWidth;
+        window.addEventListener("load", (() => {
+            if (script_innerWidth <= 767.98) {
+                const projectsCardCity = document.querySelectorAll(".block-main-projects__city");
+                if (projectsCardCity) projectsCardCity.forEach((el => {
+                    el.innerHTML = "<span>" + el.closest(".block-main-projects__row").querySelector(".block-main-projects__where").innerText + "</span>" + el.innerHTML;
+                }));
+            }
+            const charMaxCol = document.querySelectorAll(".form__char-max");
+            if (charMaxCol.length) charMaxCol.forEach((charMax => {
+                let maxValue = charMax.parentElement.querySelector("textarea").getAttribute("maxlength");
+                let textarea = charMax.parentElement.querySelector("textarea");
+                textarea.oninput = () => {
+                    textarea.value ? charMax.innerHTML = textarea.value.length + "/" + maxValue : charMax.innerHTML = "1000 char max";
+                };
+            }));
+            const blockCurrentDate = document.querySelector("#time");
+            if (blockCurrentDate) {
+                setInterval((() => {
+                    date();
+                }), 1e3);
+                date();
+                function date() {
+                    const date = new Date;
+                    let currentHourse, currentMinutes, prepand;
+                    currentHourse = date.getUTCHours() - 4;
+                    currentMinutes = date.getMinutes();
+                    prepand = currentHourse >= 12 ? " pm " : " am ";
+                    currentHourse > 12 ? currentHourse -= 12 : "";
+                    currentHourse < 10 ? currentHourse = "0" + currentHourse : "";
+                    currentMinutes < 10 ? currentMinutes = "0" + currentMinutes : "";
+                    blockCurrentDate.innerText = currentHourse + ":" + currentMinutes + prepand;
+                }
+            }
+            const contsctsPage = document.querySelector(".contacts");
+            if (contsctsPage) {
+                const startForm = document.querySelector("#start-form");
+                const formClients = document.querySelector("#form-clients");
+                const formVendors = document.querySelector("#form-vendors");
+                _slideUp(formClients, 0);
+                _slideUp(formVendors, 0);
+                contsctsPage.addEventListener("click", (e => {
+                    const target = e.target;
+                    if (target.closest(".form__checkbox-label_select")) {
+                        const buttons = target.closest(".form__radio-box").querySelectorAll(".form__checkbox-label_select");
+                        if (buttons.length) buttons.forEach((button => {
+                            if (target.closest(".form__checkbox-label_select")) {
+                                button.classList.remove("active");
+                                target.classList.add("active");
+                                const input = target.closest(".form__input").querySelector("input");
+                                input.value = target.querySelector(".form__checkbox-text").innerText;
+                                "" !== input.value ? input.classList.add("active") : input.classList.remove("active");
+                            }
+                        }));
+                    }
+                    if (target.closest(".form__close")) {
+                        _slideUp(target.closest(".form"));
+                        _slideDown(startForm);
+                    }
+                    if (target.closest(".form__select-all")) {
+                        const checkboxAll = target.closest(".form").querySelectorAll(".form__checkbox-input_checkbox");
+                        checkboxAll.forEach((checkbox => {
+                            checkbox.setAttribute("checked", "");
+                        }));
+                    }
+                    if (target.closest("#clients")) {
+                        _slideUp(startForm);
+                        _slideDown(formClients);
+                    }
+                    if (target.closest("#vendors")) {
+                        _slideUp(startForm);
+                        _slideDown(formVendors);
+                    }
+                }));
+            }
+        }));
+        if (menuBtn) menuBtn.addEventListener("click", (function(e) {
+            if (e) {
+                headerContainer.classList.add("_active-menu");
+                headerMenu.classList.add("_active-menu");
+                headerButtons.classList.add("_active-menu");
+                mobileMenu.classList.add("_active-menu");
+            }
+        }));
+        if (script_menuClose) script_menuClose.addEventListener("click", (function(e) {
+            if (e) {
+                headerContainer.classList.remove("_active-menu");
+                headerMenu.classList.remove("_active-menu");
+                headerButtons.classList.remove("_active-menu");
+                mobileMenu.classList.remove("_active-menu");
+            }
+        }));
+        mobileMenuCallback.addEventListener("click", (function(e) {
+            if (e) {
+                function summonMobileMenuForm() {
+                    mobileMenuForm.classList.add("_form-active");
+                }
+                summonMobileMenuForm();
+            }
+        }));
+        formButton.addEventListener("click", (function(e) {
+            if (e) mobileMenuForm.classList.remove("_form-active");
+        }));
+        mobileFormSummon.addEventListener("click", (function(e) {
+            if (e) {
+                headerContainer.classList.add("_active-menu");
+                headerMenu.classList.add("_active-menu");
+                headerButtons.classList.add("_active-menu");
+                mobileMenu.classList.add("_active-menu");
+                mobileMenuForm.classList.add("_form-active");
+            }
+        }));
+        let phoneInputs = document.querySelectorAll("input[data-tel]");
+        if (phoneInputs.length) {
+            let getInputNumberOnly = function(input) {
+                return input.value.replace(/\D/g, "");
+            };
+            let onPhoneIntup = function(e) {
+                let input = e.target;
+                let inputNumberValue = getInputNumberOnly(input);
+                let formattedInpuValue = "";
+                let selectionStart = input.selectionStart;
+                if (!inputNumberValue) return input.value = "";
+                if (input.value.length != selectionStart) {
+                    if (e.data && /\D/g.test(e.data)) input.value = inputNumberValue;
+                    return;
+                }
+                if (inputNumberValue > -1) {
+                    let firstSimbols = "1" == inputNumberValue[0] ? "+1 " : "+1 (" + inputNumberValue;
+                    formattedInpuValue = firstSimbols;
+                    if (inputNumberValue.length > 1) formattedInpuValue += "(" + inputNumberValue.substring(1, 4);
+                    if (inputNumberValue.length >= 5) formattedInpuValue += ") " + inputNumberValue.substring(4, 7);
+                    if (inputNumberValue.length >= 8) formattedInpuValue += "-" + inputNumberValue.substring(7, 11);
+                } else formattedInpuValue.substring();
+                input.value = formattedInpuValue;
+            };
+            let onPhoneKeyDown = function(e) {
+                let input = e.target;
+                if (8 == e.keyCode && 1 == getInputNumberOnly(input).length) input.value = "";
+            };
+            let onPhonePaste = function(e) {
+                let pasted = e.clipboardData || window.clipboardData;
+                let input = e.target;
+                let inputNumberValue = getInputNumberOnly(input);
+                if (pasted) {
+                    let pastedText = pasted.getData("Text");
+                    if (/\D/g.test(pastedText)) input.value = inputNumberValue;
+                }
+            };
+            for (let i = 0; i < phoneInputs.length; i++) {
+                let input = phoneInputs[i];
+                input.addEventListener("input", onPhoneIntup);
+                input.addEventListener("keydown", onPhoneKeyDown);
+                input.addEventListener("paste", onPhonePaste);
+            }
+        }
+        document.addEventListener("formSent", (function(e) {
+            const currentForm = e.detail.form;
+            if (currentForm) {
+                const formButton = document.querySelector(".form__btn");
+                formButton.innerText = "Request has been Sent";
+            }
+        }));
         function _assertThisInitialized(self) {
             if (void 0 === self) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
             return self;
@@ -3913,1648 +4348,6 @@
         var gsapWithCSS = gsap.registerPlugin(CSSPlugin) || gsap;
         gsapWithCSS.core.Tween;
         /*!
- * ScrollTrigger 3.9.1
- * https://greensock.com
- *
- * @license Copyright 2008-2021, GreenSock. All rights reserved.
- * Subject to the terms at https://greensock.com/standard-license or for
- * Club GreenSock members, the agreement issued with that membership.
- * @author: Jack Doyle, jack@greensock.com
-*/
-        var ScrollTrigger_gsap, ScrollTrigger_coreInitted, ScrollTrigger_win, ScrollTrigger_doc, _docEl, _body, _root, _resizeDelay, _toArray, ScrollTrigger_clamp, _time2, _syncInterval, _refreshing, _pointerIsDown, ScrollTrigger_transformProp, _i, _prevWidth, _prevHeight, _autoRefresh, _sort, ScrollTrigger_suppressOverwrites, _ignoreResize, _limitCallbacks, _creatingMedia, _lastMediaTick, _refreshingAll, _startup = 1, _proxies = [], _scrollers = [], _getTime = Date.now, _time1 = _getTime(), _lastScrollTime = 0, _enabled = 1, ScrollTrigger_passThrough = function _passThrough(v) {
-            return v;
-        }, _getTarget = function _getTarget(t) {
-            return _toArray(t)[0] || (ScrollTrigger_isString(t) && false !== ScrollTrigger_gsap.config().nullTargetWarn ? console.warn("Element not found:", t) : null);
-        }, ScrollTrigger_round = function _round(value) {
-            return Math.round(1e5 * value) / 1e5 || 0;
-        }, ScrollTrigger_windowExists = function _windowExists() {
-            return "undefined" !== typeof window;
-        }, _getGSAP = function _getGSAP() {
-            return ScrollTrigger_gsap || ScrollTrigger_windowExists() && (ScrollTrigger_gsap = window.gsap) && ScrollTrigger_gsap.registerPlugin && ScrollTrigger_gsap;
-        }, _isViewport = function _isViewport(e) {
-            return !!~_root.indexOf(e);
-        }, _getProxyProp = function _getProxyProp(element, property) {
-            return ~_proxies.indexOf(element) && _proxies[_proxies.indexOf(element) + 1][property];
-        }, _getScrollFunc = function _getScrollFunc(element, _ref) {
-            var s = _ref.s, sc = _ref.sc;
-            var i = _scrollers.indexOf(element), offset = sc === _vertical.sc ? 1 : 2;
-            !~i && (i = _scrollers.push(element) - 1);
-            return _scrollers[i + offset] || (_scrollers[i + offset] = _getProxyProp(element, s) || (_isViewport(element) ? sc : function(value) {
-                return arguments.length ? element[s] = value : element[s];
-            }));
-        }, _getBoundsFunc = function _getBoundsFunc(element) {
-            return _getProxyProp(element, "getBoundingClientRect") || (_isViewport(element) ? function() {
-                _winOffsets.width = ScrollTrigger_win.innerWidth;
-                _winOffsets.height = ScrollTrigger_win.innerHeight;
-                return _winOffsets;
-            } : function() {
-                return _getBounds(element);
-            });
-        }, _getSizeFunc = function _getSizeFunc(scroller, isViewport, _ref2) {
-            var d = _ref2.d, d2 = _ref2.d2, a = _ref2.a;
-            return (a = _getProxyProp(scroller, "getBoundingClientRect")) ? function() {
-                return a()[d];
-            } : function() {
-                return (isViewport ? ScrollTrigger_win["inner" + d2] : scroller["client" + d2]) || 0;
-            };
-        }, _getOffsetsFunc = function _getOffsetsFunc(element, isViewport) {
-            return !isViewport || ~_proxies.indexOf(element) ? _getBoundsFunc(element) : function() {
-                return _winOffsets;
-            };
-        }, _maxScroll = function _maxScroll(element, _ref3) {
-            var s = _ref3.s, d2 = _ref3.d2, d = _ref3.d, a = _ref3.a;
-            return (s = "scroll" + d2) && (a = _getProxyProp(element, s)) ? a() - _getBoundsFunc(element)()[d] : _isViewport(element) ? (_body[s] || _docEl[s]) - (ScrollTrigger_win["inner" + d2] || _docEl["client" + d2] || _body["client" + d2]) : element[s] - element["offset" + d2];
-        }, _iterateAutoRefresh = function _iterateAutoRefresh(func, events) {
-            for (var i = 0; i < _autoRefresh.length; i += 3) (!events || ~events.indexOf(_autoRefresh[i + 1])) && func(_autoRefresh[i], _autoRefresh[i + 1], _autoRefresh[i + 2]);
-        }, ScrollTrigger_isString = function _isString(value) {
-            return "string" === typeof value;
-        }, ScrollTrigger_isFunction = function _isFunction(value) {
-            return "function" === typeof value;
-        }, ScrollTrigger_isNumber = function _isNumber(value) {
-            return "number" === typeof value;
-        }, ScrollTrigger_isObject = function _isObject(value) {
-            return "object" === typeof value;
-        }, _callIfFunc = function _callIfFunc(value) {
-            return ScrollTrigger_isFunction(value) && value();
-        }, _combineFunc = function _combineFunc(f1, f2) {
-            return function() {
-                var result1 = _callIfFunc(f1), result2 = _callIfFunc(f2);
-                return function() {
-                    _callIfFunc(result1);
-                    _callIfFunc(result2);
-                };
-            };
-        }, _endAnimation = function _endAnimation(animation, reversed, pause) {
-            return animation && animation.progress(reversed ? 0 : 1) && pause && animation.pause();
-        }, ScrollTrigger_callback = function _callback(self, func) {
-            if (self.enabled) {
-                var result = func(self);
-                result && result.totalTime && (self.callbackAnimation = result);
-            }
-        }, _abs = Math.abs, _scrollLeft = "scrollLeft", _scrollTop = "scrollTop", _left = "left", _top = "top", _right = "right", _bottom = "bottom", _width = "width", _height = "height", _Right = "Right", _Left = "Left", _Top = "Top", _Bottom = "Bottom", _padding = "padding", _margin = "margin", _Width = "Width", _Height = "Height", _px = "px", _horizontal = {
-            s: _scrollLeft,
-            p: _left,
-            p2: _Left,
-            os: _right,
-            os2: _Right,
-            d: _width,
-            d2: _Width,
-            a: "x",
-            sc: function sc(value) {
-                return arguments.length ? ScrollTrigger_win.scrollTo(value, _vertical.sc()) : ScrollTrigger_win.pageXOffset || ScrollTrigger_doc[_scrollLeft] || _docEl[_scrollLeft] || _body[_scrollLeft] || 0;
-            }
-        }, _vertical = {
-            s: _scrollTop,
-            p: _top,
-            p2: _Top,
-            os: _bottom,
-            os2: _Bottom,
-            d: _height,
-            d2: _Height,
-            a: "y",
-            op: _horizontal,
-            sc: function sc(value) {
-                return arguments.length ? ScrollTrigger_win.scrollTo(_horizontal.sc(), value) : ScrollTrigger_win.pageYOffset || ScrollTrigger_doc[_scrollTop] || _docEl[_scrollTop] || _body[_scrollTop] || 0;
-            }
-        }, _getComputedStyle = function _getComputedStyle(element) {
-            return ScrollTrigger_win.getComputedStyle(element);
-        }, _makePositionable = function _makePositionable(element) {
-            var position = _getComputedStyle(element).position;
-            element.style.position = "absolute" === position || "fixed" === position ? position : "relative";
-        }, ScrollTrigger_setDefaults = function _setDefaults(obj, defaults) {
-            for (var p in defaults) p in obj || (obj[p] = defaults[p]);
-            return obj;
-        }, _getBounds = function _getBounds(element, withoutTransforms) {
-            var tween = withoutTransforms && "matrix(1, 0, 0, 1, 0, 0)" !== _getComputedStyle(element)[ScrollTrigger_transformProp] && ScrollTrigger_gsap.to(element, {
-                x: 0,
-                y: 0,
-                xPercent: 0,
-                yPercent: 0,
-                rotation: 0,
-                rotationX: 0,
-                rotationY: 0,
-                scale: 1,
-                skewX: 0,
-                skewY: 0
-            }).progress(1), bounds = element.getBoundingClientRect();
-            tween && tween.progress(0).kill();
-            return bounds;
-        }, _getSize = function _getSize(element, _ref4) {
-            var d2 = _ref4.d2;
-            return element["offset" + d2] || element["client" + d2] || 0;
-        }, _getLabelRatioArray = function _getLabelRatioArray(timeline) {
-            var p, a = [], labels = timeline.labels, duration = timeline.duration();
-            for (p in labels) a.push(labels[p] / duration);
-            return a;
-        }, _getClosestLabel = function _getClosestLabel(animation) {
-            return function(value) {
-                return ScrollTrigger_gsap.utils.snap(_getLabelRatioArray(animation), value);
-            };
-        }, _snapDirectional = function _snapDirectional(snapIncrementOrArray) {
-            var snap = ScrollTrigger_gsap.utils.snap(snapIncrementOrArray), a = Array.isArray(snapIncrementOrArray) && snapIncrementOrArray.slice(0).sort((function(a, b) {
-                return a - b;
-            }));
-            return a ? function(value, direction, threshold) {
-                if (void 0 === threshold) threshold = .001;
-                var i;
-                if (!direction) return snap(value);
-                if (direction > 0) {
-                    value -= threshold;
-                    for (i = 0; i < a.length; i++) if (a[i] >= value) return a[i];
-                    return a[i - 1];
-                } else {
-                    i = a.length;
-                    value += threshold;
-                    while (i--) if (a[i] <= value) return a[i];
-                }
-                return a[0];
-            } : function(value, direction, threshold) {
-                if (void 0 === threshold) threshold = .001;
-                var snapped = snap(value);
-                return !direction || Math.abs(snapped - value) < threshold || snapped - value < 0 === direction < 0 ? snapped : snap(direction < 0 ? value - snapIncrementOrArray : value + snapIncrementOrArray);
-            };
-        }, _getLabelAtDirection = function _getLabelAtDirection(timeline) {
-            return function(value, st) {
-                return _snapDirectional(_getLabelRatioArray(timeline))(value, st.direction);
-            };
-        }, _multiListener = function _multiListener(func, element, types, callback) {
-            return types.split(",").forEach((function(type) {
-                return func(element, type, callback);
-            }));
-        }, _addListener = function _addListener(element, type, func) {
-            return element.addEventListener(type, func, {
-                passive: true
-            });
-        }, _removeListener = function _removeListener(element, type, func) {
-            return element.removeEventListener(type, func);
-        }, _markerDefaults = {
-            startColor: "green",
-            endColor: "red",
-            indent: 0,
-            fontSize: "16px",
-            fontWeight: "normal"
-        }, ScrollTrigger_defaults = {
-            toggleActions: "play",
-            anticipatePin: 0
-        }, _keywords = {
-            top: 0,
-            left: 0,
-            center: .5,
-            bottom: 1,
-            right: 1
-        }, _offsetToPx = function _offsetToPx(value, size) {
-            if (ScrollTrigger_isString(value)) {
-                var eqIndex = value.indexOf("="), relative = ~eqIndex ? +(value.charAt(eqIndex - 1) + 1) * parseFloat(value.substr(eqIndex + 1)) : 0;
-                if (~eqIndex) {
-                    value.indexOf("%") > eqIndex && (relative *= size / 100);
-                    value = value.substr(0, eqIndex - 1);
-                }
-                value = relative + (value in _keywords ? _keywords[value] * size : ~value.indexOf("%") ? parseFloat(value) * size / 100 : parseFloat(value) || 0);
-            }
-            return value;
-        }, _createMarker = function _createMarker(type, name, container, direction, _ref5, offset, matchWidthEl, containerAnimation) {
-            var startColor = _ref5.startColor, endColor = _ref5.endColor, fontSize = _ref5.fontSize, indent = _ref5.indent, fontWeight = _ref5.fontWeight;
-            var e = ScrollTrigger_doc.createElement("div"), useFixedPosition = _isViewport(container) || "fixed" === _getProxyProp(container, "pinType"), isScroller = -1 !== type.indexOf("scroller"), parent = useFixedPosition ? _body : container, isStart = -1 !== type.indexOf("start"), color = isStart ? startColor : endColor, css = "border-color:" + color + ";font-size:" + fontSize + ";color:" + color + ";font-weight:" + fontWeight + ";pointer-events:none;white-space:nowrap;font-family:sans-serif,Arial;z-index:1000;padding:4px 8px;border-width:0;border-style:solid;";
-            css += "position:" + ((isScroller || containerAnimation) && useFixedPosition ? "fixed;" : "absolute;");
-            (isScroller || containerAnimation || !useFixedPosition) && (css += (direction === _vertical ? _right : _bottom) + ":" + (offset + parseFloat(indent)) + "px;");
-            matchWidthEl && (css += "box-sizing:border-box;text-align:left;width:" + matchWidthEl.offsetWidth + "px;");
-            e._isStart = isStart;
-            e.setAttribute("class", "gsap-marker-" + type + (name ? " marker-" + name : ""));
-            e.style.cssText = css;
-            e.innerText = name || 0 === name ? type + "-" + name : type;
-            parent.children[0] ? parent.insertBefore(e, parent.children[0]) : parent.appendChild(e);
-            e._offset = e["offset" + direction.op.d2];
-            _positionMarker(e, 0, direction, isStart);
-            return e;
-        }, _positionMarker = function _positionMarker(marker, start, direction, flipped) {
-            var vars = {
-                display: "block"
-            }, side = direction[flipped ? "os2" : "p2"], oppositeSide = direction[flipped ? "p2" : "os2"];
-            marker._isFlipped = flipped;
-            vars[direction.a + "Percent"] = flipped ? -100 : 0;
-            vars[direction.a] = flipped ? "1px" : 0;
-            vars["border" + side + _Width] = 1;
-            vars["border" + oppositeSide + _Width] = 0;
-            vars[direction.p] = start + "px";
-            ScrollTrigger_gsap.set(marker, vars);
-        }, _triggers = [], _ids = {}, _sync = function _sync() {
-            return _getTime() - _lastScrollTime > 34 && _updateAll();
-        }, _onScroll = function _onScroll() {
-            _updateAll();
-            _lastScrollTime || _dispatch("scrollStart");
-            _lastScrollTime = _getTime();
-        }, _onResize = function _onResize() {
-            return !_refreshing && !_ignoreResize && !ScrollTrigger_doc.fullscreenElement && _resizeDelay.restart(true);
-        }, _listeners = {}, _emptyArray = [], _media = [], _onMediaChange = function _onMediaChange(e) {
-            var index, tick = ScrollTrigger_gsap.ticker.frame, matches = [], i = 0;
-            if (_lastMediaTick !== tick || _startup) {
-                _revertAll();
-                for (;i < _media.length; i += 4) {
-                    index = ScrollTrigger_win.matchMedia(_media[i]).matches;
-                    if (index !== _media[i + 3]) {
-                        _media[i + 3] = index;
-                        index ? matches.push(i) : _revertAll(1, _media[i]) || ScrollTrigger_isFunction(_media[i + 2]) && _media[i + 2]();
-                    }
-                }
-                _revertRecorded();
-                for (i = 0; i < matches.length; i++) {
-                    index = matches[i];
-                    _creatingMedia = _media[index];
-                    _media[index + 2] = _media[index + 1](e);
-                }
-                _creatingMedia = 0;
-                ScrollTrigger_coreInitted && _refreshAll(0, 1);
-                _lastMediaTick = tick;
-                _dispatch("matchMedia");
-            }
-        }, _softRefresh = function _softRefresh() {
-            return _removeListener(ScrollTrigger, "scrollEnd", _softRefresh) || _refreshAll(true);
-        }, _dispatch = function _dispatch(type) {
-            return _listeners[type] && _listeners[type].map((function(f) {
-                return f();
-            })) || _emptyArray;
-        }, _savedStyles = [], _revertRecorded = function _revertRecorded(media) {
-            for (var i = 0; i < _savedStyles.length; i += 5) if (!media || _savedStyles[i + 4] === media) {
-                _savedStyles[i].style.cssText = _savedStyles[i + 1];
-                _savedStyles[i].getBBox && _savedStyles[i].setAttribute("transform", _savedStyles[i + 2] || "");
-                _savedStyles[i + 3].uncache = 1;
-            }
-        }, _revertAll = function _revertAll(kill, media) {
-            var trigger;
-            for (_i = 0; _i < _triggers.length; _i++) {
-                trigger = _triggers[_i];
-                if (!media || trigger.media === media) if (kill) trigger.kill(1); else trigger.revert();
-            }
-            media && _revertRecorded(media);
-            media || _dispatch("revert");
-        }, _clearScrollMemory = function _clearScrollMemory() {
-            return _scrollers.forEach((function(obj) {
-                return "function" === typeof obj && (obj.rec = 0);
-            }));
-        }, _refreshAll = function _refreshAll(force, skipRevert) {
-            if (_lastScrollTime && !force) {
-                _addListener(ScrollTrigger, "scrollEnd", _softRefresh);
-                return;
-            }
-            _refreshingAll = true;
-            var refreshInits = _dispatch("refreshInit");
-            _sort && ScrollTrigger.sort();
-            skipRevert || _revertAll();
-            _triggers.forEach((function(t) {
-                return t.refresh();
-            }));
-            _triggers.forEach((function(t) {
-                return "max" === t.vars.end && t.setPositions(t.start, _maxScroll(t.scroller, t._dir));
-            }));
-            refreshInits.forEach((function(result) {
-                return result && result.render && result.render(-1);
-            }));
-            _clearScrollMemory();
-            _resizeDelay.pause();
-            _refreshingAll = false;
-            _dispatch("refresh");
-        }, _lastScroll = 0, _direction = 1, _updateAll = function _updateAll() {
-            if (!_refreshingAll) {
-                var l = _triggers.length, time = _getTime(), recordVelocity = time - _time1 >= 50, scroll = l && _triggers[0].scroll();
-                _direction = _lastScroll > scroll ? -1 : 1;
-                _lastScroll = scroll;
-                if (recordVelocity) {
-                    if (_lastScrollTime && !_pointerIsDown && time - _lastScrollTime > 200) {
-                        _lastScrollTime = 0;
-                        _dispatch("scrollEnd");
-                    }
-                    _time2 = _time1;
-                    _time1 = time;
-                }
-                if (_direction < 0) {
-                    _i = l;
-                    while (_i-- > 0) _triggers[_i] && _triggers[_i].update(0, recordVelocity);
-                    _direction = 1;
-                } else for (_i = 0; _i < l; _i++) _triggers[_i] && _triggers[_i].update(0, recordVelocity);
-            }
-        }, _propNamesToCopy = [ _left, _top, _bottom, _right, _margin + _Bottom, _margin + _Right, _margin + _Top, _margin + _Left, "display", "flexShrink", "float", "zIndex", "gridColumnStart", "gridColumnEnd", "gridRowStart", "gridRowEnd", "gridArea", "justifySelf", "alignSelf", "placeSelf", "order" ], _stateProps = _propNamesToCopy.concat([ _width, _height, "boxSizing", "max" + _Width, "max" + _Height, "position", _margin, _padding, _padding + _Top, _padding + _Right, _padding + _Bottom, _padding + _Left ]), _swapPinOut = function _swapPinOut(pin, spacer, state) {
-            _setState(state);
-            var cache = pin._gsap;
-            if (cache.spacerIsNative) _setState(cache.spacerState); else if (pin.parentNode === spacer) {
-                var parent = spacer.parentNode;
-                if (parent) {
-                    parent.insertBefore(pin, spacer);
-                    parent.removeChild(spacer);
-                }
-            }
-        }, _swapPinIn = function _swapPinIn(pin, spacer, cs, spacerState) {
-            if (pin.parentNode !== spacer) {
-                var p, i = _propNamesToCopy.length, spacerStyle = spacer.style, pinStyle = pin.style;
-                while (i--) {
-                    p = _propNamesToCopy[i];
-                    spacerStyle[p] = cs[p];
-                }
-                spacerStyle.position = "absolute" === cs.position ? "absolute" : "relative";
-                "inline" === cs.display && (spacerStyle.display = "inline-block");
-                pinStyle[_bottom] = pinStyle[_right] = spacerStyle.flexBasis = "auto";
-                spacerStyle.overflow = "visible";
-                spacerStyle.boxSizing = "border-box";
-                spacerStyle[_width] = _getSize(pin, _horizontal) + _px;
-                spacerStyle[_height] = _getSize(pin, _vertical) + _px;
-                spacerStyle[_padding] = pinStyle[_margin] = pinStyle[_top] = pinStyle[_left] = "0";
-                _setState(spacerState);
-                pinStyle[_width] = pinStyle["max" + _Width] = cs[_width];
-                pinStyle[_height] = pinStyle["max" + _Height] = cs[_height];
-                pinStyle[_padding] = cs[_padding];
-                pin.parentNode.insertBefore(spacer, pin);
-                spacer.appendChild(pin);
-            }
-        }, ScrollTrigger_capsExp = /([A-Z])/g, _setState = function _setState(state) {
-            if (state) {
-                var p, value, style = state.t.style, l = state.length, i = 0;
-                (state.t._gsap || ScrollTrigger_gsap.core.getCache(state.t)).uncache = 1;
-                for (;i < l; i += 2) {
-                    value = state[i + 1];
-                    p = state[i];
-                    if (value) style[p] = value; else if (style[p]) style.removeProperty(p.replace(ScrollTrigger_capsExp, "-$1").toLowerCase());
-                }
-            }
-        }, _getState = function _getState(element) {
-            var l = _stateProps.length, style = element.style, state = [], i = 0;
-            for (;i < l; i++) state.push(_stateProps[i], style[_stateProps[i]]);
-            state.t = element;
-            return state;
-        }, _copyState = function _copyState(state, override, omitOffsets) {
-            var p, result = [], l = state.length, i = omitOffsets ? 8 : 0;
-            for (;i < l; i += 2) {
-                p = state[i];
-                result.push(p, p in override ? override[p] : state[i + 1]);
-            }
-            result.t = state.t;
-            return result;
-        }, _winOffsets = {
-            left: 0,
-            top: 0
-        }, ScrollTrigger_parsePosition = function _parsePosition(value, trigger, scrollerSize, direction, scroll, marker, markerScroller, self, scrollerBounds, borderWidth, useFixedPosition, scrollerMax, containerAnimation) {
-            ScrollTrigger_isFunction(value) && (value = value(self));
-            if (ScrollTrigger_isString(value) && "max" === value.substr(0, 3)) value = scrollerMax + ("=" === value.charAt(4) ? _offsetToPx("0" + value.substr(3), scrollerSize) : 0);
-            var p1, p2, element, time = containerAnimation ? containerAnimation.time() : 0;
-            containerAnimation && containerAnimation.seek(0);
-            if (!ScrollTrigger_isNumber(value)) {
-                ScrollTrigger_isFunction(trigger) && (trigger = trigger(self));
-                var bounds, localOffset, globalOffset, display, offsets = value.split(" ");
-                element = _getTarget(trigger) || _body;
-                bounds = _getBounds(element) || {};
-                if ((!bounds || !bounds.left && !bounds.top) && "none" === _getComputedStyle(element).display) {
-                    display = element.style.display;
-                    element.style.display = "block";
-                    bounds = _getBounds(element);
-                    display ? element.style.display = display : element.style.removeProperty("display");
-                }
-                localOffset = _offsetToPx(offsets[0], bounds[direction.d]);
-                globalOffset = _offsetToPx(offsets[1] || "0", scrollerSize);
-                value = bounds[direction.p] - scrollerBounds[direction.p] - borderWidth + localOffset + scroll - globalOffset;
-                markerScroller && _positionMarker(markerScroller, globalOffset, direction, scrollerSize - globalOffset < 20 || markerScroller._isStart && globalOffset > 20);
-                scrollerSize -= scrollerSize - globalOffset;
-            } else if (markerScroller) _positionMarker(markerScroller, scrollerSize, direction, true);
-            if (marker) {
-                var position = value + scrollerSize, isStart = marker._isStart;
-                p1 = "scroll" + direction.d2;
-                _positionMarker(marker, position, direction, isStart && position > 20 || !isStart && (useFixedPosition ? Math.max(_body[p1], _docEl[p1]) : marker.parentNode[p1]) <= position + 1);
-                if (useFixedPosition) {
-                    scrollerBounds = _getBounds(markerScroller);
-                    useFixedPosition && (marker.style[direction.op.p] = scrollerBounds[direction.op.p] - direction.op.m - marker._offset + _px);
-                }
-            }
-            if (containerAnimation && element) {
-                p1 = _getBounds(element);
-                containerAnimation.seek(scrollerMax);
-                p2 = _getBounds(element);
-                containerAnimation._caScrollDist = p1[direction.p] - p2[direction.p];
-                value = value / containerAnimation._caScrollDist * scrollerMax;
-            }
-            containerAnimation && containerAnimation.seek(time);
-            return containerAnimation ? value : Math.round(value);
-        }, _prefixExp = /(?:webkit|moz|length|cssText|inset)/i, _reparent = function _reparent(element, parent, top, left) {
-            if (element.parentNode !== parent) {
-                var p, cs, style = element.style;
-                if (parent === _body) {
-                    element._stOrig = style.cssText;
-                    cs = _getComputedStyle(element);
-                    for (p in cs) if (!+p && !_prefixExp.test(p) && cs[p] && "string" === typeof style[p] && "0" !== p) style[p] = cs[p];
-                    style.top = top;
-                    style.left = left;
-                } else style.cssText = element._stOrig;
-                ScrollTrigger_gsap.core.getCache(element).uncache = 1;
-                parent.appendChild(element);
-            }
-        }, _getTweenCreator = function _getTweenCreator(scroller, direction) {
-            var lastScroll1, lastScroll2, getScroll = _getScrollFunc(scroller, direction), prop = "_scroll" + direction.p2, getTween = function getTween(scrollTo, vars, initialValue, change1, change2) {
-                var tween = getTween.tween, onComplete = vars.onComplete, modifiers = {};
-                tween && tween.kill();
-                lastScroll1 = Math.round(initialValue);
-                vars[prop] = scrollTo;
-                vars.modifiers = modifiers;
-                modifiers[prop] = function(value) {
-                    value = ScrollTrigger_round(getScroll());
-                    if (value !== lastScroll1 && value !== lastScroll2 && Math.abs(value - lastScroll1) > 2 && Math.abs(value - lastScroll2) > 2) {
-                        tween.kill();
-                        getTween.tween = 0;
-                    } else value = initialValue + change1 * tween.ratio + change2 * tween.ratio * tween.ratio;
-                    lastScroll2 = lastScroll1;
-                    return lastScroll1 = ScrollTrigger_round(value);
-                };
-                vars.onComplete = function() {
-                    getTween.tween = 0;
-                    onComplete && onComplete.call(tween);
-                };
-                tween = getTween.tween = ScrollTrigger_gsap.to(scroller, vars);
-                return tween;
-            };
-            scroller[prop] = getScroll;
-            _addListener(scroller, "wheel", (function() {
-                return getTween.tween && getTween.tween.kill() && (getTween.tween = 0);
-            }));
-            return getTween;
-        };
-        _horizontal.op = _vertical;
-        var ScrollTrigger = function() {
-            function ScrollTrigger(vars, animation) {
-                ScrollTrigger_coreInitted || ScrollTrigger.register(ScrollTrigger_gsap) || console.warn("Please gsap.registerPlugin(ScrollTrigger)");
-                this.init(vars, animation);
-            }
-            var _proto = ScrollTrigger.prototype;
-            _proto.init = function init(vars, animation) {
-                this.progress = this.start = 0;
-                this.vars && this.kill(1);
-                if (!_enabled) {
-                    this.update = this.refresh = this.kill = ScrollTrigger_passThrough;
-                    return;
-                }
-                vars = ScrollTrigger_setDefaults(ScrollTrigger_isString(vars) || ScrollTrigger_isNumber(vars) || vars.nodeType ? {
-                    trigger: vars
-                } : vars, ScrollTrigger_defaults);
-                var tweenTo, pinCache, snapFunc, scroll1, scroll2, start, end, markerStart, markerEnd, markerStartTrigger, markerEndTrigger, markerVars, change, pinOriginalState, pinActiveState, pinState, spacer, offset, pinGetter, pinSetter, pinStart, pinChange, spacingStart, spacerState, markerStartSetter, markerEndSetter, cs, snap1, snap2, scrubTween, scrubSmooth, snapDurClamp, snapDelayedCall, prevProgress, prevScroll, prevAnimProgress, caMarkerSetter, _vars = vars, onUpdate = _vars.onUpdate, toggleClass = _vars.toggleClass, id = _vars.id, onToggle = _vars.onToggle, onRefresh = _vars.onRefresh, scrub = _vars.scrub, trigger = _vars.trigger, pin = _vars.pin, pinSpacing = _vars.pinSpacing, invalidateOnRefresh = _vars.invalidateOnRefresh, anticipatePin = _vars.anticipatePin, onScrubComplete = _vars.onScrubComplete, onSnapComplete = _vars.onSnapComplete, once = _vars.once, snap = _vars.snap, pinReparent = _vars.pinReparent, pinSpacer = _vars.pinSpacer, containerAnimation = _vars.containerAnimation, fastScrollEnd = _vars.fastScrollEnd, preventOverlaps = _vars.preventOverlaps, direction = vars.horizontal || vars.containerAnimation && false !== vars.horizontal ? _horizontal : _vertical, isToggle = !scrub && 0 !== scrub, scroller = _getTarget(vars.scroller || ScrollTrigger_win), scrollerCache = ScrollTrigger_gsap.core.getCache(scroller), isViewport = _isViewport(scroller), useFixedPosition = "fixed" === ("pinType" in vars ? vars.pinType : _getProxyProp(scroller, "pinType") || isViewport && "fixed"), callbacks = [ vars.onEnter, vars.onLeave, vars.onEnterBack, vars.onLeaveBack ], toggleActions = isToggle && vars.toggleActions.split(" "), markers = "markers" in vars ? vars.markers : ScrollTrigger_defaults.markers, borderWidth = isViewport ? 0 : parseFloat(_getComputedStyle(scroller)["border" + direction.p2 + _Width]) || 0, self = this, onRefreshInit = vars.onRefreshInit && function() {
-                    return vars.onRefreshInit(self);
-                }, getScrollerSize = _getSizeFunc(scroller, isViewport, direction), getScrollerOffsets = _getOffsetsFunc(scroller, isViewport), lastSnap = 0, scrollFunc = _getScrollFunc(scroller, direction);
-                self.media = _creatingMedia;
-                self._dir = direction;
-                anticipatePin *= 45;
-                self.scroller = scroller;
-                self.scroll = containerAnimation ? containerAnimation.time.bind(containerAnimation) : scrollFunc;
-                scroll1 = scrollFunc();
-                self.vars = vars;
-                animation = animation || vars.animation;
-                "refreshPriority" in vars && (_sort = 1);
-                scrollerCache.tweenScroll = scrollerCache.tweenScroll || {
-                    top: _getTweenCreator(scroller, _vertical),
-                    left: _getTweenCreator(scroller, _horizontal)
-                };
-                self.tweenTo = tweenTo = scrollerCache.tweenScroll[direction.p];
-                if (animation) {
-                    animation.vars.lazy = false;
-                    animation._initted || false !== animation.vars.immediateRender && false !== vars.immediateRender && animation.render(0, true, true);
-                    self.animation = animation.pause();
-                    animation.scrollTrigger = self;
-                    scrubSmooth = ScrollTrigger_isNumber(scrub) && scrub;
-                    scrubSmooth && (scrubTween = ScrollTrigger_gsap.to(animation, {
-                        ease: "power3",
-                        duration: scrubSmooth,
-                        onComplete: function onComplete() {
-                            return onScrubComplete && onScrubComplete(self);
-                        }
-                    }));
-                    snap1 = 0;
-                    id || (id = animation.vars.id);
-                }
-                _triggers.push(self);
-                if (snap) {
-                    if (!ScrollTrigger_isObject(snap) || snap.push) snap = {
-                        snapTo: snap
-                    };
-                    "scrollBehavior" in _body.style && ScrollTrigger_gsap.set(isViewport ? [ _body, _docEl ] : scroller, {
-                        scrollBehavior: "auto"
-                    });
-                    snapFunc = ScrollTrigger_isFunction(snap.snapTo) ? snap.snapTo : "labels" === snap.snapTo ? _getClosestLabel(animation) : "labelsDirectional" === snap.snapTo ? _getLabelAtDirection(animation) : false !== snap.directional ? function(value, st) {
-                        return _snapDirectional(snap.snapTo)(value, st.direction);
-                    } : ScrollTrigger_gsap.utils.snap(snap.snapTo);
-                    snapDurClamp = snap.duration || {
-                        min: .1,
-                        max: 2
-                    };
-                    snapDurClamp = ScrollTrigger_isObject(snapDurClamp) ? ScrollTrigger_clamp(snapDurClamp.min, snapDurClamp.max) : ScrollTrigger_clamp(snapDurClamp, snapDurClamp);
-                    snapDelayedCall = ScrollTrigger_gsap.delayedCall(snap.delay || scrubSmooth / 2 || .1, (function() {
-                        if (Math.abs(self.getVelocity()) < 10 && !_pointerIsDown && lastSnap !== scrollFunc()) {
-                            var totalProgress = animation && !isToggle ? animation.totalProgress() : self.progress, velocity = (totalProgress - snap2) / (_getTime() - _time2) * 1e3 || 0, change1 = ScrollTrigger_gsap.utils.clamp(-self.progress, 1 - self.progress, _abs(velocity / 2) * velocity / .185), naturalEnd = self.progress + (false === snap.inertia ? 0 : change1), endValue = ScrollTrigger_clamp(0, 1, snapFunc(naturalEnd, self)), scroll = scrollFunc(), endScroll = Math.round(start + endValue * change), _snap = snap, onStart = _snap.onStart, _onInterrupt = _snap.onInterrupt, _onComplete = _snap.onComplete, tween = tweenTo.tween;
-                            if (scroll <= end && scroll >= start && endScroll !== scroll) {
-                                if (tween && !tween._initted && tween.data <= _abs(endScroll - scroll)) return;
-                                if (false === snap.inertia) change1 = endValue - self.progress;
-                                tweenTo(endScroll, {
-                                    duration: snapDurClamp(_abs(.185 * Math.max(_abs(naturalEnd - totalProgress), _abs(endValue - totalProgress)) / velocity / .05 || 0)),
-                                    ease: snap.ease || "power3",
-                                    data: _abs(endScroll - scroll),
-                                    onInterrupt: function onInterrupt() {
-                                        return snapDelayedCall.restart(true) && _onInterrupt && _onInterrupt(self);
-                                    },
-                                    onComplete: function onComplete() {
-                                        self.update();
-                                        lastSnap = scrollFunc();
-                                        snap1 = snap2 = animation && !isToggle ? animation.totalProgress() : self.progress;
-                                        onSnapComplete && onSnapComplete(self);
-                                        _onComplete && _onComplete(self);
-                                    }
-                                }, scroll, change1 * change, endScroll - scroll - change1 * change);
-                                onStart && onStart(self, tweenTo.tween);
-                            }
-                        } else if (self.isActive) snapDelayedCall.restart(true);
-                    })).pause();
-                }
-                id && (_ids[id] = self);
-                trigger = self.trigger = _getTarget(trigger || pin);
-                pin = true === pin ? trigger : _getTarget(pin);
-                ScrollTrigger_isString(toggleClass) && (toggleClass = {
-                    targets: trigger,
-                    className: toggleClass
-                });
-                if (pin) {
-                    false === pinSpacing || pinSpacing === _margin || (pinSpacing = !pinSpacing && "flex" === _getComputedStyle(pin.parentNode).display ? false : _padding);
-                    self.pin = pin;
-                    false !== vars.force3D && ScrollTrigger_gsap.set(pin, {
-                        force3D: true
-                    });
-                    pinCache = ScrollTrigger_gsap.core.getCache(pin);
-                    if (!pinCache.spacer) {
-                        if (pinSpacer) {
-                            pinSpacer = _getTarget(pinSpacer);
-                            pinSpacer && !pinSpacer.nodeType && (pinSpacer = pinSpacer.current || pinSpacer.nativeElement);
-                            pinCache.spacerIsNative = !!pinSpacer;
-                            pinSpacer && (pinCache.spacerState = _getState(pinSpacer));
-                        }
-                        pinCache.spacer = spacer = pinSpacer || ScrollTrigger_doc.createElement("div");
-                        spacer.classList.add("pin-spacer");
-                        id && spacer.classList.add("pin-spacer-" + id);
-                        pinCache.pinState = pinOriginalState = _getState(pin);
-                    } else pinOriginalState = pinCache.pinState;
-                    self.spacer = spacer = pinCache.spacer;
-                    cs = _getComputedStyle(pin);
-                    spacingStart = cs[pinSpacing + direction.os2];
-                    pinGetter = ScrollTrigger_gsap.getProperty(pin);
-                    pinSetter = ScrollTrigger_gsap.quickSetter(pin, direction.a, _px);
-                    _swapPinIn(pin, spacer, cs);
-                    pinState = _getState(pin);
-                }
-                if (markers) {
-                    markerVars = ScrollTrigger_isObject(markers) ? ScrollTrigger_setDefaults(markers, _markerDefaults) : _markerDefaults;
-                    markerStartTrigger = _createMarker("scroller-start", id, scroller, direction, markerVars, 0);
-                    markerEndTrigger = _createMarker("scroller-end", id, scroller, direction, markerVars, 0, markerStartTrigger);
-                    offset = markerStartTrigger["offset" + direction.op.d2];
-                    markerStart = _createMarker("start", id, scroller, direction, markerVars, offset, 0, containerAnimation);
-                    markerEnd = _createMarker("end", id, scroller, direction, markerVars, offset, 0, containerAnimation);
-                    containerAnimation && (caMarkerSetter = ScrollTrigger_gsap.quickSetter([ markerStart, markerEnd ], direction.a, _px));
-                    if (!useFixedPosition && !(_proxies.length && true === _getProxyProp(scroller, "fixedMarkers"))) {
-                        _makePositionable(isViewport ? _body : scroller);
-                        ScrollTrigger_gsap.set([ markerStartTrigger, markerEndTrigger ], {
-                            force3D: true
-                        });
-                        markerStartSetter = ScrollTrigger_gsap.quickSetter(markerStartTrigger, direction.a, _px);
-                        markerEndSetter = ScrollTrigger_gsap.quickSetter(markerEndTrigger, direction.a, _px);
-                    }
-                }
-                if (containerAnimation) {
-                    var oldOnUpdate = containerAnimation.vars.onUpdate, oldParams = containerAnimation.vars.onUpdateParams;
-                    containerAnimation.eventCallback("onUpdate", (function() {
-                        self.update(0, 0, 1);
-                        oldOnUpdate && oldOnUpdate.apply(oldParams || []);
-                    }));
-                }
-                self.previous = function() {
-                    return _triggers[_triggers.indexOf(self) - 1];
-                };
-                self.next = function() {
-                    return _triggers[_triggers.indexOf(self) + 1];
-                };
-                self.revert = function(revert) {
-                    var r = false !== revert || !self.enabled, prevRefreshing = _refreshing;
-                    if (r !== self.isReverted) {
-                        if (r) {
-                            self.scroll.rec || (self.scroll.rec = scrollFunc());
-                            prevScroll = Math.max(scrollFunc(), self.scroll.rec || 0);
-                            prevProgress = self.progress;
-                            prevAnimProgress = animation && animation.progress();
-                        }
-                        markerStart && [ markerStart, markerEnd, markerStartTrigger, markerEndTrigger ].forEach((function(m) {
-                            return m.style.display = r ? "none" : "block";
-                        }));
-                        r && (_refreshing = 1);
-                        self.update(r);
-                        _refreshing = prevRefreshing;
-                        pin && (r ? _swapPinOut(pin, spacer, pinOriginalState) : (!pinReparent || !self.isActive) && _swapPinIn(pin, spacer, _getComputedStyle(pin), spacerState));
-                        self.isReverted = r;
-                    }
-                };
-                self.refresh = function(soft, force) {
-                    if ((_refreshing || !self.enabled) && !force) return;
-                    if (pin && soft && _lastScrollTime) {
-                        _addListener(ScrollTrigger, "scrollEnd", _softRefresh);
-                        return;
-                    }
-                    _refreshing = 1;
-                    scrubTween && scrubTween.pause();
-                    invalidateOnRefresh && animation && animation.time(-.01, true).invalidate();
-                    self.isReverted || self.revert();
-                    var cs, bounds, scroll, isVertical, override, curTrigger, curPin, oppositeScroll, initted, revertedPins, size = getScrollerSize(), scrollerBounds = getScrollerOffsets(), max = containerAnimation ? containerAnimation.duration() : _maxScroll(scroller, direction), offset = 0, otherPinOffset = 0, parsedEnd = vars.end, parsedEndTrigger = vars.endTrigger || trigger, parsedStart = vars.start || (0 === vars.start || !trigger ? 0 : pin ? "0 0" : "0 100%"), pinnedContainer = vars.pinnedContainer && _getTarget(vars.pinnedContainer), triggerIndex = trigger && Math.max(0, _triggers.indexOf(self)) || 0, i = triggerIndex;
-                    while (i--) {
-                        curTrigger = _triggers[i];
-                        curTrigger.end || curTrigger.refresh(0, 1) || (_refreshing = 1);
-                        curPin = curTrigger.pin;
-                        if (curPin && (curPin === trigger || curPin === pin) && !curTrigger.isReverted) {
-                            revertedPins || (revertedPins = []);
-                            revertedPins.unshift(curTrigger);
-                            curTrigger.revert();
-                        }
-                    }
-                    ScrollTrigger_isFunction(parsedStart) && (parsedStart = parsedStart(self));
-                    start = ScrollTrigger_parsePosition(parsedStart, trigger, size, direction, scrollFunc(), markerStart, markerStartTrigger, self, scrollerBounds, borderWidth, useFixedPosition, max, containerAnimation) || (pin ? -.001 : 0);
-                    ScrollTrigger_isFunction(parsedEnd) && (parsedEnd = parsedEnd(self));
-                    if (ScrollTrigger_isString(parsedEnd) && !parsedEnd.indexOf("+=")) if (~parsedEnd.indexOf(" ")) parsedEnd = (ScrollTrigger_isString(parsedStart) ? parsedStart.split(" ")[0] : "") + parsedEnd; else {
-                        offset = _offsetToPx(parsedEnd.substr(2), size);
-                        parsedEnd = ScrollTrigger_isString(parsedStart) ? parsedStart : start + offset;
-                        parsedEndTrigger = trigger;
-                    }
-                    end = Math.max(start, ScrollTrigger_parsePosition(parsedEnd || (parsedEndTrigger ? "100% 0" : max), parsedEndTrigger, size, direction, scrollFunc() + offset, markerEnd, markerEndTrigger, self, scrollerBounds, borderWidth, useFixedPosition, max, containerAnimation)) || -.001;
-                    change = end - start || (start -= .01) && .001;
-                    offset = 0;
-                    i = triggerIndex;
-                    while (i--) {
-                        curTrigger = _triggers[i];
-                        curPin = curTrigger.pin;
-                        if (curPin && curTrigger.start - curTrigger._pinPush < start && !containerAnimation) {
-                            cs = curTrigger.end - curTrigger.start;
-                            if ((curPin === trigger || curPin === pinnedContainer) && !ScrollTrigger_isNumber(parsedStart)) offset += cs * (1 - curTrigger.progress);
-                            curPin === pin && (otherPinOffset += cs);
-                        }
-                    }
-                    start += offset;
-                    end += offset;
-                    self._pinPush = otherPinOffset;
-                    if (markerStart && offset) {
-                        cs = {};
-                        cs[direction.a] = "+=" + offset;
-                        pinnedContainer && (cs[direction.p] = "-=" + scrollFunc());
-                        ScrollTrigger_gsap.set([ markerStart, markerEnd ], cs);
-                    }
-                    if (pin) {
-                        cs = _getComputedStyle(pin);
-                        isVertical = direction === _vertical;
-                        scroll = scrollFunc();
-                        pinStart = parseFloat(pinGetter(direction.a)) + otherPinOffset;
-                        !max && end > 1 && ((isViewport ? _body : scroller).style["overflow-" + direction.a] = "scroll");
-                        _swapPinIn(pin, spacer, cs);
-                        pinState = _getState(pin);
-                        bounds = _getBounds(pin, true);
-                        oppositeScroll = useFixedPosition && _getScrollFunc(scroller, isVertical ? _horizontal : _vertical)();
-                        if (pinSpacing) {
-                            spacerState = [ pinSpacing + direction.os2, change + otherPinOffset + _px ];
-                            spacerState.t = spacer;
-                            i = pinSpacing === _padding ? _getSize(pin, direction) + change + otherPinOffset : 0;
-                            i && spacerState.push(direction.d, i + _px);
-                            _setState(spacerState);
-                            useFixedPosition && scrollFunc(prevScroll);
-                        }
-                        if (useFixedPosition) {
-                            override = {
-                                top: bounds.top + (isVertical ? scroll - start : oppositeScroll) + _px,
-                                left: bounds.left + (isVertical ? oppositeScroll : scroll - start) + _px,
-                                boxSizing: "border-box",
-                                position: "fixed"
-                            };
-                            override[_width] = override["max" + _Width] = Math.ceil(bounds.width) + _px;
-                            override[_height] = override["max" + _Height] = Math.ceil(bounds.height) + _px;
-                            override[_margin] = override[_margin + _Top] = override[_margin + _Right] = override[_margin + _Bottom] = override[_margin + _Left] = "0";
-                            override[_padding] = cs[_padding];
-                            override[_padding + _Top] = cs[_padding + _Top];
-                            override[_padding + _Right] = cs[_padding + _Right];
-                            override[_padding + _Bottom] = cs[_padding + _Bottom];
-                            override[_padding + _Left] = cs[_padding + _Left];
-                            pinActiveState = _copyState(pinOriginalState, override, pinReparent);
-                        }
-                        if (animation) {
-                            initted = animation._initted;
-                            ScrollTrigger_suppressOverwrites(1);
-                            animation.render(animation.duration(), true, true);
-                            pinChange = pinGetter(direction.a) - pinStart + change + otherPinOffset;
-                            change !== pinChange && pinActiveState.splice(pinActiveState.length - 2, 2);
-                            animation.render(0, true, true);
-                            initted || animation.invalidate();
-                            ScrollTrigger_suppressOverwrites(0);
-                        } else pinChange = change;
-                    } else if (trigger && scrollFunc() && !containerAnimation) {
-                        bounds = trigger.parentNode;
-                        while (bounds && bounds !== _body) {
-                            if (bounds._pinOffset) {
-                                start -= bounds._pinOffset;
-                                end -= bounds._pinOffset;
-                            }
-                            bounds = bounds.parentNode;
-                        }
-                    }
-                    revertedPins && revertedPins.forEach((function(t) {
-                        return t.revert(false);
-                    }));
-                    self.start = start;
-                    self.end = end;
-                    scroll1 = scroll2 = scrollFunc();
-                    if (!containerAnimation) {
-                        scroll1 < prevScroll && scrollFunc(prevScroll);
-                        self.scroll.rec = 0;
-                    }
-                    self.revert(false);
-                    _refreshing = 0;
-                    animation && isToggle && animation._initted && animation.progress() !== prevAnimProgress && animation.progress(prevAnimProgress, true).render(animation.time(), true, true);
-                    if (prevProgress !== self.progress || containerAnimation) {
-                        animation && !isToggle && animation.totalProgress(prevProgress, true);
-                        self.progress = prevProgress;
-                        self.update(0, 0, 1);
-                    }
-                    pin && pinSpacing && (spacer._pinOffset = Math.round(self.progress * pinChange));
-                    onRefresh && onRefresh(self);
-                };
-                self.getVelocity = function() {
-                    return (scrollFunc() - scroll2) / (_getTime() - _time2) * 1e3 || 0;
-                };
-                self.endAnimation = function() {
-                    _endAnimation(self.callbackAnimation);
-                    if (animation) scrubTween ? scrubTween.progress(1) : !animation.paused() ? _endAnimation(animation, animation.reversed()) : isToggle || _endAnimation(animation, self.direction < 0, 1);
-                };
-                self.labelToScroll = function(label) {
-                    return animation && animation.labels && (start || self.refresh() || start) + animation.labels[label] / animation.duration() * change || 0;
-                };
-                self.getTrailing = function(name) {
-                    var i = _triggers.indexOf(self), a = self.direction > 0 ? _triggers.slice(0, i).reverse() : _triggers.slice(i + 1);
-                    return ScrollTrigger_isString(name) ? a.filter((function(t) {
-                        return t.vars.preventOverlaps === name;
-                    })) : a;
-                };
-                self.update = function(reset, recordVelocity, forceFake) {
-                    if (containerAnimation && !forceFake && !reset) return;
-                    var isActive, wasActive, toggleState, action, stateChanged, toggled, isAtMax, isTakingAction, scroll = self.scroll(), p = reset ? 0 : (scroll - start) / change, clipped = p < 0 ? 0 : p > 1 ? 1 : p || 0, prevProgress = self.progress;
-                    if (recordVelocity) {
-                        scroll2 = scroll1;
-                        scroll1 = containerAnimation ? scrollFunc() : scroll;
-                        if (snap) {
-                            snap2 = snap1;
-                            snap1 = animation && !isToggle ? animation.totalProgress() : clipped;
-                        }
-                    }
-                    anticipatePin && !clipped && pin && !_refreshing && !_startup && _lastScrollTime && start < scroll + (scroll - scroll2) / (_getTime() - _time2) * anticipatePin && (clipped = 1e-4);
-                    if (clipped !== prevProgress && self.enabled) {
-                        isActive = self.isActive = !!clipped && clipped < 1;
-                        wasActive = !!prevProgress && prevProgress < 1;
-                        toggled = isActive !== wasActive;
-                        stateChanged = toggled || !!clipped !== !!prevProgress;
-                        self.direction = clipped > prevProgress ? 1 : -1;
-                        self.progress = clipped;
-                        if (stateChanged && !_refreshing) {
-                            toggleState = clipped && !prevProgress ? 0 : 1 === clipped ? 1 : 1 === prevProgress ? 2 : 3;
-                            if (isToggle) {
-                                action = !toggled && "none" !== toggleActions[toggleState + 1] && toggleActions[toggleState + 1] || toggleActions[toggleState];
-                                isTakingAction = animation && ("complete" === action || "reset" === action || action in animation);
-                            }
-                        }
-                        preventOverlaps && toggled && (isTakingAction || scrub || !animation) && (ScrollTrigger_isFunction(preventOverlaps) ? preventOverlaps(self) : self.getTrailing(preventOverlaps).forEach((function(t) {
-                            return t.endAnimation();
-                        })));
-                        if (!isToggle) if (scrubTween && !_refreshing && !_startup) {
-                            scrubTween.vars.totalProgress = clipped;
-                            scrubTween.invalidate().restart();
-                        } else if (animation) animation.totalProgress(clipped, !!_refreshing);
-                        if (pin) {
-                            reset && pinSpacing && (spacer.style[pinSpacing + direction.os2] = spacingStart);
-                            if (!useFixedPosition) pinSetter(pinStart + pinChange * clipped); else if (stateChanged) {
-                                isAtMax = !reset && clipped > prevProgress && end + 1 > scroll && scroll + 1 >= _maxScroll(scroller, direction);
-                                if (pinReparent) if (!reset && (isActive || isAtMax)) {
-                                    var bounds = _getBounds(pin, true), _offset = scroll - start;
-                                    _reparent(pin, _body, bounds.top + (direction === _vertical ? _offset : 0) + _px, bounds.left + (direction === _vertical ? 0 : _offset) + _px);
-                                } else _reparent(pin, spacer);
-                                _setState(isActive || isAtMax ? pinActiveState : pinState);
-                                pinChange !== change && clipped < 1 && isActive || pinSetter(pinStart + (1 === clipped && !isAtMax ? pinChange : 0));
-                            }
-                        }
-                        snap && !tweenTo.tween && !_refreshing && !_startup && snapDelayedCall.restart(true);
-                        toggleClass && (toggled || once && clipped && (clipped < 1 || !_limitCallbacks)) && _toArray(toggleClass.targets).forEach((function(el) {
-                            return el.classList[isActive || once ? "add" : "remove"](toggleClass.className);
-                        }));
-                        onUpdate && !isToggle && !reset && onUpdate(self);
-                        if (stateChanged && !_refreshing) {
-                            if (isToggle) {
-                                if (isTakingAction) if ("complete" === action) animation.pause().totalProgress(1); else if ("reset" === action) animation.restart(true).pause(); else if ("restart" === action) animation.restart(true); else animation[action]();
-                                onUpdate && onUpdate(self);
-                            }
-                            if (toggled || !_limitCallbacks) {
-                                onToggle && toggled && ScrollTrigger_callback(self, onToggle);
-                                callbacks[toggleState] && ScrollTrigger_callback(self, callbacks[toggleState]);
-                                once && (1 === clipped ? self.kill(false, 1) : callbacks[toggleState] = 0);
-                                if (!toggled) {
-                                    toggleState = 1 === clipped ? 1 : 3;
-                                    callbacks[toggleState] && ScrollTrigger_callback(self, callbacks[toggleState]);
-                                }
-                            }
-                            if (fastScrollEnd && !isActive && Math.abs(self.getVelocity()) > (ScrollTrigger_isNumber(fastScrollEnd) ? fastScrollEnd : 2500)) {
-                                _endAnimation(self.callbackAnimation);
-                                scrubTween ? scrubTween.progress(1) : _endAnimation(animation, !clipped, 1);
-                            }
-                        } else if (isToggle && onUpdate && !_refreshing) onUpdate(self);
-                    }
-                    if (markerEndSetter) {
-                        var n = containerAnimation ? scroll / containerAnimation.duration() * (containerAnimation._caScrollDist || 0) : scroll;
-                        markerStartSetter(n + (markerStartTrigger._isFlipped ? 1 : 0));
-                        markerEndSetter(n);
-                    }
-                    caMarkerSetter && caMarkerSetter(-scroll / containerAnimation.duration() * (containerAnimation._caScrollDist || 0));
-                };
-                self.enable = function(reset, refresh) {
-                    if (!self.enabled) {
-                        self.enabled = true;
-                        _addListener(scroller, "resize", _onResize);
-                        _addListener(scroller, "scroll", _onScroll);
-                        onRefreshInit && _addListener(ScrollTrigger, "refreshInit", onRefreshInit);
-                        if (false !== reset) {
-                            self.progress = prevProgress = 0;
-                            scroll1 = scroll2 = lastSnap = scrollFunc();
-                        }
-                        false !== refresh && self.refresh();
-                    }
-                };
-                self.getTween = function(snap) {
-                    return snap && tweenTo ? tweenTo.tween : scrubTween;
-                };
-                self.setPositions = function(newStart, newEnd) {
-                    if (pin) {
-                        pinStart += newStart - start;
-                        pinChange += newEnd - newStart - change;
-                    }
-                    self.start = start = newStart;
-                    self.end = end = newEnd;
-                    change = newEnd - newStart;
-                    self.update();
-                };
-                self.disable = function(reset, allowAnimation) {
-                    if (self.enabled) {
-                        false !== reset && self.revert();
-                        self.enabled = self.isActive = false;
-                        allowAnimation || scrubTween && scrubTween.pause();
-                        prevScroll = 0;
-                        pinCache && (pinCache.uncache = 1);
-                        onRefreshInit && _removeListener(ScrollTrigger, "refreshInit", onRefreshInit);
-                        if (snapDelayedCall) {
-                            snapDelayedCall.pause();
-                            tweenTo.tween && tweenTo.tween.kill() && (tweenTo.tween = 0);
-                        }
-                        if (!isViewport) {
-                            var i = _triggers.length;
-                            while (i--) if (_triggers[i].scroller === scroller && _triggers[i] !== self) return;
-                            _removeListener(scroller, "resize", _onResize);
-                            _removeListener(scroller, "scroll", _onScroll);
-                        }
-                    }
-                };
-                self.kill = function(revert, allowAnimation) {
-                    self.disable(revert, allowAnimation);
-                    scrubTween && scrubTween.kill();
-                    id && delete _ids[id];
-                    var i = _triggers.indexOf(self);
-                    i >= 0 && _triggers.splice(i, 1);
-                    i === _i && _direction > 0 && _i--;
-                    i = 0;
-                    _triggers.forEach((function(t) {
-                        return t.scroller === self.scroller && (i = 1);
-                    }));
-                    i || (self.scroll.rec = 0);
-                    if (animation) {
-                        animation.scrollTrigger = null;
-                        revert && animation.render(-1);
-                        allowAnimation || animation.kill();
-                    }
-                    markerStart && [ markerStart, markerEnd, markerStartTrigger, markerEndTrigger ].forEach((function(m) {
-                        return m.parentNode && m.parentNode.removeChild(m);
-                    }));
-                    if (pin) {
-                        pinCache && (pinCache.uncache = 1);
-                        i = 0;
-                        _triggers.forEach((function(t) {
-                            return t.pin === pin && i++;
-                        }));
-                        i || (pinCache.spacer = 0);
-                    }
-                };
-                self.enable(false, false);
-                !animation || !animation.add || change ? self.refresh() : ScrollTrigger_gsap.delayedCall(.01, (function() {
-                    return start || end || self.refresh();
-                })) && (change = .01) && (start = end = 0);
-            };
-            ScrollTrigger.register = function register(core) {
-                if (!ScrollTrigger_coreInitted) {
-                    ScrollTrigger_gsap = core || _getGSAP();
-                    if (ScrollTrigger_windowExists() && window.document) {
-                        ScrollTrigger_win = window;
-                        ScrollTrigger_doc = document;
-                        _docEl = ScrollTrigger_doc.documentElement;
-                        _body = ScrollTrigger_doc.body;
-                    }
-                    if (ScrollTrigger_gsap) {
-                        _toArray = ScrollTrigger_gsap.utils.toArray;
-                        ScrollTrigger_clamp = ScrollTrigger_gsap.utils.clamp;
-                        ScrollTrigger_suppressOverwrites = ScrollTrigger_gsap.core.suppressOverwrites || ScrollTrigger_passThrough;
-                        ScrollTrigger_gsap.core.globals("ScrollTrigger", ScrollTrigger);
-                        if (_body) {
-                            _addListener(ScrollTrigger_win, "wheel", _onScroll);
-                            _root = [ ScrollTrigger_win, ScrollTrigger_doc, _docEl, _body ];
-                            _addListener(ScrollTrigger_doc, "scroll", _onScroll);
-                            var bounds, bodyStyle = _body.style, border = bodyStyle.borderTopStyle;
-                            bodyStyle.borderTopStyle = "solid";
-                            bounds = _getBounds(_body);
-                            _vertical.m = Math.round(bounds.top + _vertical.sc()) || 0;
-                            _horizontal.m = Math.round(bounds.left + _horizontal.sc()) || 0;
-                            border ? bodyStyle.borderTopStyle = border : bodyStyle.removeProperty("border-top-style");
-                            _syncInterval = setInterval(_sync, 200);
-                            ScrollTrigger_gsap.delayedCall(.5, (function() {
-                                return _startup = 0;
-                            }));
-                            _addListener(ScrollTrigger_doc, "touchcancel", ScrollTrigger_passThrough);
-                            _addListener(_body, "touchstart", ScrollTrigger_passThrough);
-                            _multiListener(_addListener, ScrollTrigger_doc, "pointerdown,touchstart,mousedown", (function() {
-                                return _pointerIsDown = 1;
-                            }));
-                            _multiListener(_addListener, ScrollTrigger_doc, "pointerup,touchend,mouseup", (function() {
-                                return _pointerIsDown = 0;
-                            }));
-                            ScrollTrigger_transformProp = ScrollTrigger_gsap.utils.checkPrefix("transform");
-                            _stateProps.push(ScrollTrigger_transformProp);
-                            ScrollTrigger_coreInitted = _getTime();
-                            _resizeDelay = ScrollTrigger_gsap.delayedCall(.2, _refreshAll).pause();
-                            _autoRefresh = [ ScrollTrigger_doc, "visibilitychange", function() {
-                                var w = ScrollTrigger_win.innerWidth, h = ScrollTrigger_win.innerHeight;
-                                if (ScrollTrigger_doc.hidden) {
-                                    _prevWidth = w;
-                                    _prevHeight = h;
-                                } else if (_prevWidth !== w || _prevHeight !== h) _onResize();
-                            }, ScrollTrigger_doc, "DOMContentLoaded", _refreshAll, ScrollTrigger_win, "load", function() {
-                                return _lastScrollTime || _refreshAll();
-                            }, ScrollTrigger_win, "resize", _onResize ];
-                            _iterateAutoRefresh(_addListener);
-                        }
-                    }
-                }
-                return ScrollTrigger_coreInitted;
-            };
-            ScrollTrigger.defaults = function defaults(config) {
-                if (config) for (var p in config) ScrollTrigger_defaults[p] = config[p];
-                return ScrollTrigger_defaults;
-            };
-            ScrollTrigger.kill = function kill() {
-                _enabled = 0;
-                _triggers.slice(0).forEach((function(trigger) {
-                    return trigger.kill(1);
-                }));
-            };
-            ScrollTrigger.config = function config(vars) {
-                "limitCallbacks" in vars && (_limitCallbacks = !!vars.limitCallbacks);
-                var ms = vars.syncInterval;
-                ms && clearInterval(_syncInterval) || (_syncInterval = ms) && setInterval(_sync, ms);
-                if ("autoRefreshEvents" in vars) {
-                    _iterateAutoRefresh(_removeListener) || _iterateAutoRefresh(_addListener, vars.autoRefreshEvents || "none");
-                    _ignoreResize = -1 === (vars.autoRefreshEvents + "").indexOf("resize");
-                }
-            };
-            ScrollTrigger.scrollerProxy = function scrollerProxy(target, vars) {
-                var t = _getTarget(target), i = _scrollers.indexOf(t), isViewport = _isViewport(t);
-                if (~i) _scrollers.splice(i, isViewport ? 6 : 2);
-                if (vars) isViewport ? _proxies.unshift(ScrollTrigger_win, vars, _body, vars, _docEl, vars) : _proxies.unshift(t, vars);
-            };
-            ScrollTrigger.matchMedia = function matchMedia(vars) {
-                var mq, p, i, func, result;
-                for (p in vars) {
-                    i = _media.indexOf(p);
-                    func = vars[p];
-                    _creatingMedia = p;
-                    if ("all" === p) func(); else {
-                        mq = ScrollTrigger_win.matchMedia(p);
-                        if (mq) {
-                            mq.matches && (result = func());
-                            if (~i) {
-                                _media[i + 1] = _combineFunc(_media[i + 1], func);
-                                _media[i + 2] = _combineFunc(_media[i + 2], result);
-                            } else {
-                                i = _media.length;
-                                _media.push(p, func, result);
-                                mq.addListener ? mq.addListener(_onMediaChange) : mq.addEventListener("change", _onMediaChange);
-                            }
-                            _media[i + 3] = mq.matches;
-                        }
-                    }
-                    _creatingMedia = 0;
-                }
-                return _media;
-            };
-            ScrollTrigger.clearMatchMedia = function clearMatchMedia(query) {
-                query || (_media.length = 0);
-                query = _media.indexOf(query);
-                query >= 0 && _media.splice(query, 4);
-            };
-            ScrollTrigger.isInViewport = function isInViewport(element, ratio, horizontal) {
-                var bounds = (ScrollTrigger_isString(element) ? _getTarget(element) : element).getBoundingClientRect(), offset = bounds[horizontal ? _width : _height] * ratio || 0;
-                return horizontal ? bounds.right - offset > 0 && bounds.left + offset < ScrollTrigger_win.innerWidth : bounds.bottom - offset > 0 && bounds.top + offset < ScrollTrigger_win.innerHeight;
-            };
-            ScrollTrigger.positionInViewport = function positionInViewport(element, referencePoint, horizontal) {
-                ScrollTrigger_isString(element) && (element = _getTarget(element));
-                var bounds = element.getBoundingClientRect(), size = bounds[horizontal ? _width : _height], offset = null == referencePoint ? size / 2 : referencePoint in _keywords ? _keywords[referencePoint] * size : ~referencePoint.indexOf("%") ? parseFloat(referencePoint) * size / 100 : parseFloat(referencePoint) || 0;
-                return horizontal ? (bounds.left + offset) / ScrollTrigger_win.innerWidth : (bounds.top + offset) / ScrollTrigger_win.innerHeight;
-            };
-            return ScrollTrigger;
-        }();
-        ScrollTrigger.version = "3.9.1";
-        ScrollTrigger.saveStyles = function(targets) {
-            return targets ? _toArray(targets).forEach((function(target) {
-                if (target && target.style) {
-                    var i = _savedStyles.indexOf(target);
-                    i >= 0 && _savedStyles.splice(i, 5);
-                    _savedStyles.push(target, target.style.cssText, target.getBBox && target.getAttribute("transform"), ScrollTrigger_gsap.core.getCache(target), _creatingMedia);
-                }
-            })) : _savedStyles;
-        };
-        ScrollTrigger.revert = function(soft, media) {
-            return _revertAll(!soft, media);
-        };
-        ScrollTrigger.create = function(vars, animation) {
-            return new ScrollTrigger(vars, animation);
-        };
-        ScrollTrigger.refresh = function(safe) {
-            return safe ? _onResize() : (ScrollTrigger_coreInitted || ScrollTrigger.register()) && _refreshAll(true);
-        };
-        ScrollTrigger.update = _updateAll;
-        ScrollTrigger.clearScrollMemory = _clearScrollMemory;
-        ScrollTrigger.maxScroll = function(element, horizontal) {
-            return _maxScroll(element, horizontal ? _horizontal : _vertical);
-        };
-        ScrollTrigger.getScrollFunc = function(element, horizontal) {
-            return _getScrollFunc(_getTarget(element), horizontal ? _horizontal : _vertical);
-        };
-        ScrollTrigger.getById = function(id) {
-            return _ids[id];
-        };
-        ScrollTrigger.getAll = function() {
-            return _triggers.slice(0);
-        };
-        ScrollTrigger.isScrolling = function() {
-            return !!_lastScrollTime;
-        };
-        ScrollTrigger.snapDirectional = _snapDirectional;
-        ScrollTrigger.addEventListener = function(type, callback) {
-            var a = _listeners[type] || (_listeners[type] = []);
-            ~a.indexOf(callback) || a.push(callback);
-        };
-        ScrollTrigger.removeEventListener = function(type, callback) {
-            var a = _listeners[type], i = a && a.indexOf(callback);
-            i >= 0 && a.splice(i, 1);
-        };
-        ScrollTrigger.batch = function(targets, vars) {
-            var p, result = [], varsCopy = {}, interval = vars.interval || .016, batchMax = vars.batchMax || 1e9, proxyCallback = function proxyCallback(type, callback) {
-                var elements = [], triggers = [], delay = ScrollTrigger_gsap.delayedCall(interval, (function() {
-                    callback(elements, triggers);
-                    elements = [];
-                    triggers = [];
-                })).pause();
-                return function(self) {
-                    elements.length || delay.restart(true);
-                    elements.push(self.trigger);
-                    triggers.push(self);
-                    batchMax <= elements.length && delay.progress(1);
-                };
-            };
-            for (p in vars) varsCopy[p] = "on" === p.substr(0, 2) && ScrollTrigger_isFunction(vars[p]) && "onRefreshInit" !== p ? proxyCallback(p, vars[p]) : vars[p];
-            if (ScrollTrigger_isFunction(batchMax)) {
-                batchMax = batchMax();
-                _addListener(ScrollTrigger, "refresh", (function() {
-                    return batchMax = vars.batchMax();
-                }));
-            }
-            _toArray(targets).forEach((function(target) {
-                var config = {};
-                for (p in varsCopy) config[p] = varsCopy[p];
-                config.trigger = target;
-                result.push(ScrollTrigger.create(config));
-            }));
-            return result;
-        };
-        ScrollTrigger.sort = function(func) {
-            return _triggers.sort(func || function(a, b) {
-                return -1e6 * (a.vars.refreshPriority || 0) + a.start - (b.start + -1e6 * (b.vars.refreshPriority || 0));
-            });
-        };
-        _getGSAP() && ScrollTrigger_gsap.registerPlugin(ScrollTrigger);
-        gsapWithCSS.registerPlugin(ScrollTrigger);
-        function qe(name) {
-            return document.querySelector(`${name}`);
-        }
-        const mainSliderSection = gsapWithCSS.timeline({
-            scrollTrigger: {
-                trigger: "#sc1",
-                scrub: true,
-                pin: true,
-                start: "bottom bottom",
-                end: "bottom -100%",
-                ease: "none",
-                pinSpacer: false,
-                pinSpacing: false
-            }
-        });
-        mainSliderSection.to("#sc2", {
-            marginTop: "100vh",
-            autoAlpha: 0,
-            duration: 0
-        }).to("#sc1", {
-            autoAlpha: 0
-        }, "<+=1").to("#sc2", {
-            autoAlpha: 1,
-            duration: 1e-6
-        });
-        const introductionSection = gsapWithCSS.timeline({
-            defaults: {
-                duration: 5
-            },
-            scrollTrigger: {
-                trigger: "#sc2",
-                scrub: .2,
-                pin: true,
-                ease: "none",
-                start: "bottom bottom",
-                end: "bottom -250%",
-                markers: true,
-                pinSpacer: false,
-                pinSpacing: false
-            }
-        });
-        introductionSection.to("#sc4", {
-            marginTop: "350vh",
-            autoAlpha: 0,
-            duration: 0
-        }).from(".introduction__title", {
-            y: "50vh",
-            opacity: 0
-        }, "<").from(".introduction__description", {
-            y: "50vh",
-            opacity: 0
-        }).from(".introduction__btn-box", {
-            y: "50vh",
-            opacity: 0
-        }).to(".introduction__btn-box", {
-            y: "50vh",
-            opacity: 0
-        }, "+=0.4").to(".introduction__description", {
-            y: "50vh",
-            opacity: 0
-        }, "<+=0.7").to(".introduction__title", {
-            scale: 320,
-            transformOrigin: "49.773% 50%",
-            ease: "power2.in"
-        }).fromTo(".introduction__body", {
-            backgroundColor: "rgba(255,255,255,1)"
-        }, {
-            backgroundColor: "rgba(255,255,255,0)",
-            ease: "power2.in"
-        }, "<+=0.11").fromTo(".introduction__title rect", {
-            fill: "rgba(0,0,0,1)"
-        }, {
-            fill: "rgba(0,0,0,0)",
-            ease: "power2.in"
-        }, "<").to("#sc2", {}, "+=1.4").fromTo("#sc2", {
-            webkitFilter: "brightness(1)",
-            filter: "brightness(1)"
-        }, {
-            webkitFilter: "brightness(0)",
-            filter: "brightness(0)"
-        }, "<").to("#sc4", {
-            marginTop: 0,
-            autoAlpha: 1,
-            duration: 0
-        });
-        const promiseSection = gsapWithCSS.timeline({
-            defaults: {
-                duration: 5
-            },
-            scrollTrigger: {
-                trigger: "#sc4",
-                scrub: .2,
-                pin: true,
-                ease: "none",
-                start: "bottom bottom",
-                end: "bottom -150%",
-                markers: true,
-                pinSpacer: false,
-                pinSpacing: false
-            }
-        });
-        promiseSection.to("#sc5", {
-            marginTop: "150vh",
-            autoAlpha: 0,
-            duration: 0
-        }).fromTo("#sc4", {
-            webkitFilter: "brightness(0)",
-            filter: "brightness(0)"
-        }, {
-            webkitFilter: "brightness(1)",
-            filter: "brightness(1)",
-            duration: 1
-        }).fromTo("#sc4 > *", {
-            yPercent: "160"
-        }, {
-            yPercent: "-160"
-        }).fromTo("#sc4 .promise__pragraph", {
-            autoAlpha: 0
-        }, {
-            autoAlpha: 1,
-            stagger: .3,
-            duration: 1.2
-        }, "<").fromTo("#sc4 .promise__pragraph", {
-            autoAlpha: 1
-        }, {
-            autoAlpha: 0,
-            stagger: .3,
-            duration: 1.5
-        }, "-=3.5").fromTo("#sc4", {
-            webkitFilter: "brightness(1)",
-            filter: "brightness(1)"
-        }, {
-            webkitFilter: "brightness(0)",
-            filter: "brightness(0)",
-            duration: 1
-        }).to("#sc5", {
-            autoAlpha: 0,
-            duration: 0
-        });
-        const sc5Section = gsapWithCSS.timeline({
-            defaults: {
-                duration: 2
-            },
-            scrollTrigger: {
-                trigger: "#sc5",
-                scrub: .2,
-                pin: true,
-                start: "bottom bottom",
-                end: "bottom -150%",
-                markers: true,
-                pinSpacer: false,
-                pinSpacing: false
-            }
-        });
-        sc5Section.to("#sc6", {
-            marginTop: "150vh",
-            autoAlpha: 0,
-            duration: 0
-        }).fromTo("#sc5", {
-            autoAlpha: 0
-        }, {
-            autoAlpha: 1
-        }, "<").to("#sc5", {}).fromTo("#sc5", {
-            autoAlpha: 1
-        }, {
-            autoAlpha: 0
-        }).to("#sc6", {
-            marginTop: 0,
-            autoAlpha: 0,
-            duration: 0
-        });
-        const sc6Section = gsapWithCSS.timeline({
-            defaults: {
-                duration: 2
-            },
-            scrollTrigger: {
-                trigger: "#sc6",
-                scrub: .2,
-                pin: true,
-                start: "bottom bottom",
-                end: "bottom -150%",
-                markers: true,
-                pinSpacer: false,
-                pinSpacing: false
-            }
-        });
-        sc6Section.to("#sc7", {
-            marginTop: "150vh",
-            autoAlpha: 0,
-            duration: 0
-        }).fromTo("#sc6", {
-            autoAlpha: 0
-        }, {
-            autoAlpha: 1
-        }, "<").from(".advantages__container .advantages__box img", {
-            xPercent: -100,
-            opacity: 0,
-            stagger: .15
-        }).from(".advantages__container .advantages__description", {
-            opacity: 0,
-            stagger: .15
-        }, "<+=0.5").fromTo("#sc6", {
-            webkitFilter: "brightness(1)",
-            filter: "brightness(1)"
-        }, {
-            webkitFilter: "brightness(0)",
-            filter: "brightness(0)"
-        }).to("#sc7", {
-            marginTop: 0,
-            duration: 0
-        });
-        const sc7Section = gsapWithCSS.timeline({
-            defaults: {
-                duration: 2
-            },
-            scrollTrigger: {
-                trigger: "#sc7",
-                scrub: .2,
-                pin: true,
-                start: "bottom bottom",
-                end: "bottom -150%",
-                markers: true,
-                pinSpacer: false,
-                pinSpacing: false
-            }
-        });
-        sc7Section.to("#sc8", {
-            marginTop: "150vh",
-            autoAlpha: 0,
-            duration: 0
-        }).fromTo("#sc7", {
-            autoAlpha: 0
-        }, {
-            autoAlpha: 1,
-            duration: 0
-        }, "<").fromTo("#sc7", {
-            webkitFilter: "brightness(0)",
-            filter: "brightness(0)"
-        }, {
-            webkitFilter: "brightness(1)",
-            filter: "brightness(1)"
-        }, "<").to("#sc7", {}).fromTo("#sc7", {
-            autoAlpha: 1
-        }, {
-            autoAlpha: 0
-        }).to("#sc8", {
-            marginTop: 0,
-            autoAlpha: 0,
-            duration: 0
-        });
-        const sc8Section = gsapWithCSS.timeline({
-            defaults: {
-                duration: 2
-            },
-            scrollTrigger: {
-                trigger: "#sc8",
-                scrub: .2,
-                pin: true,
-                start: "bottom bottom",
-                end: "bottom -100%",
-                markers: true,
-                pinSpacer: false,
-                pinSpacing: false
-            }
-        });
-        sc8Section.to("#sc9", {
-            marginTop: "150vh",
-            autoAlpha: 0,
-            duration: 0
-        }).fromTo("#sc8", {
-            autoAlpha: 0
-        }, {
-            autoAlpha: 1
-        }, "<").from(".team__content", {
-            y: 60,
-            opacity: 0
-        }).fromTo("#sc8", {
-            autoAlpha: 1
-        }, {
-            autoAlpha: 0
-        }).to("#sc9", {
-            marginTop: 0,
-            autoAlpha: 0,
-            duration: 0
-        });
-        const sc9Section = gsapWithCSS.timeline({
-            defaults: {
-                duration: 2
-            },
-            scrollTrigger: {
-                trigger: "#sc9",
-                scrub: .2,
-                pin: true,
-                start: "bottom bottom",
-                end: "bottom -100%",
-                markers: true,
-                pinSpacer: true,
-                pinSpacing: true
-            }
-        });
-        sc9Section.fromTo("#sc9", {
-            autoAlpha: 0
-        }, {
-            autoAlpha: 1
-        }).to("#sc9", {}).to(".footer", {
-            marginTop: 0,
-            duration: 0
-        });
-        window.addEventListener("scroll", animScroll);
-        function animScroll(e) {
-            window.scrollY;
-            if (qe("#sc4").getBoundingClientRect().top < qe("#sc4").offsetHeight / 2 && qe("#sc4").getBoundingClientRect().top > qe("#sc4").offsetHeight - 2 * qe("#sc4").offsetHeight) qe("body").style.backgroundColor = "#000"; else if (qe("#sc6").getBoundingClientRect().top < qe("#sc6").offsetHeight / 2 - qe("#sc6").offsetHeight && qe("#sc6").getBoundingClientRect().top > qe("#sc6").offsetHeight - 2 * qe("#sc6").offsetHeight) qe("body").style.backgroundColor = "#000"; else qe("body").style.backgroundColor = "#fff";
-            console.log(qe("#sc6").getBoundingClientRect().top);
-            console.log(qe("#sc6").offsetHeight / 2 - qe("#sc6").offsetHeight);
-        }
-        const player = document.querySelector(".video-service__wrapper");
-        if (player) {
-            const video = player.querySelector(".video-service__video");
-            const videoButton = player.querySelector(".video-service__button");
-            videoButton.addEventListener("click", (e => {
-                if (video.paused) {
-                    video.play();
-                    e.target.classList.add("video-service__button_played");
-                } else if (!video.paused) {
-                    video.pause();
-                    e.target.classList.remove("video-service__button_played");
-                } else if (video.onended) e.target.classList.remove("video-service__button_played");
-            }));
-        }
-        if (document.querySelector(".mobile-menu__item_big")) {
-            const menuBigItems = document.querySelectorAll(".mobile-menu__item_big");
-            menuBigItems[menuBigItems.length - 1].classList.add("mobile-menu__item_last");
-        }
-        const menuBtn = document.querySelector(".header__burger");
-        const script_menuClose = document.querySelector(".mobile-menu__burger");
-        const headerContainer = document.querySelector(".header__container");
-        const headerMenu = document.querySelector(".header__menu");
-        const headerButtons = document.querySelector(".header__buttons");
-        const mobileMenu = document.querySelector(".mobile-menu");
-        const mobileMenuCallback = document.querySelector(".mobile-menu__button");
-        const mobileFormSummon = document.querySelector(".callback");
-        const mobileMenuForm = document.querySelector(".mobile-menu__form");
-        const formButton = document.querySelector(".form__button");
-        let script_innerWidth = window.innerWidth;
-        window.addEventListener("load", (() => {
-            if (script_innerWidth <= 767.98) {
-                const projectsCardCity = document.querySelectorAll(".block-main-projects__city");
-                if (projectsCardCity) projectsCardCity.forEach((el => {
-                    el.innerHTML = "<span>" + el.closest(".block-main-projects__row").querySelector(".block-main-projects__where").innerText + "</span>" + el.innerHTML;
-                }));
-            }
-            const charMaxCol = document.querySelectorAll(".form__char-max");
-            if (charMaxCol.length) charMaxCol.forEach((charMax => {
-                let maxValue = charMax.parentElement.querySelector("textarea").getAttribute("maxlength");
-                let textarea = charMax.parentElement.querySelector("textarea");
-                textarea.oninput = () => {
-                    textarea.value ? charMax.innerHTML = textarea.value.length + "/" + maxValue : charMax.innerHTML = "1000 char max";
-                };
-            }));
-            const blockCurrentDate = document.querySelector("#time");
-            if (blockCurrentDate) {
-                setInterval((() => {
-                    date();
-                }), 1e3);
-                date();
-                function date() {
-                    const date = new Date;
-                    let currentHourse, currentMinutes, prepand;
-                    currentHourse = date.getUTCHours() - 4;
-                    currentMinutes = date.getMinutes();
-                    prepand = currentHourse >= 12 ? " pm " : " am ";
-                    currentHourse > 12 ? currentHourse -= 12 : "";
-                    currentHourse < 10 ? currentHourse = "0" + currentHourse : "";
-                    currentMinutes < 10 ? currentMinutes = "0" + currentMinutes : "";
-                    blockCurrentDate.innerText = currentHourse + ":" + currentMinutes + prepand;
-                }
-            }
-            const contsctsPage = document.querySelector(".contacts");
-            if (contsctsPage) {
-                const startForm = document.querySelector("#start-form");
-                const formClients = document.querySelector("#form-clients");
-                const formVendors = document.querySelector("#form-vendors");
-                _slideUp(formClients, 0);
-                _slideUp(formVendors, 0);
-                contsctsPage.addEventListener("click", (e => {
-                    const target = e.target;
-                    if (target.closest(".form__checkbox-label_select")) {
-                        const buttons = target.closest(".form__radio-box").querySelectorAll(".form__checkbox-label_select");
-                        if (buttons.length) buttons.forEach((button => {
-                            if (target.closest(".form__checkbox-label_select")) {
-                                button.classList.remove("active");
-                                target.classList.add("active");
-                                const input = target.closest(".form__input").querySelector("input");
-                                input.value = target.querySelector(".form__checkbox-text").innerText;
-                                "" !== input.value ? input.classList.add("active") : input.classList.remove("active");
-                            }
-                        }));
-                    }
-                    if (target.closest(".form__close")) {
-                        _slideUp(target.closest(".form"));
-                        _slideDown(startForm);
-                    }
-                    if (target.closest(".form__select-all")) {
-                        const checkboxAll = target.closest(".form").querySelectorAll(".form__checkbox-input_checkbox");
-                        checkboxAll.forEach((checkbox => {
-                            checkbox.setAttribute("checked", "");
-                        }));
-                    }
-                    if (target.closest("#clients")) {
-                        _slideUp(startForm);
-                        _slideDown(formClients);
-                    }
-                    if (target.closest("#vendors")) {
-                        _slideUp(startForm);
-                        _slideDown(formVendors);
-                    }
-                }));
-            }
-        }));
-        if (menuBtn) menuBtn.addEventListener("click", (function(e) {
-            if (e) {
-                headerContainer.classList.add("_active-menu");
-                headerMenu.classList.add("_active-menu");
-                headerButtons.classList.add("_active-menu");
-                mobileMenu.classList.add("_active-menu");
-            }
-        }));
-        if (script_menuClose) script_menuClose.addEventListener("click", (function(e) {
-            if (e) {
-                headerContainer.classList.remove("_active-menu");
-                headerMenu.classList.remove("_active-menu");
-                headerButtons.classList.remove("_active-menu");
-                mobileMenu.classList.remove("_active-menu");
-            }
-        }));
-        mobileMenuCallback.addEventListener("click", (function(e) {
-            if (e) {
-                function summonMobileMenuForm() {
-                    mobileMenuForm.classList.add("_form-active");
-                }
-                summonMobileMenuForm();
-            }
-        }));
-        formButton.addEventListener("click", (function(e) {
-            if (e) mobileMenuForm.classList.remove("_form-active");
-        }));
-        mobileFormSummon.addEventListener("click", (function(e) {
-            if (e) {
-                headerContainer.classList.add("_active-menu");
-                headerMenu.classList.add("_active-menu");
-                headerButtons.classList.add("_active-menu");
-                mobileMenu.classList.add("_active-menu");
-                mobileMenuForm.classList.add("_form-active");
-            }
-        }));
-        let phoneInputs = document.querySelectorAll("input[data-tel]");
-        if (phoneInputs.length) {
-            let getInputNumberOnly = function(input) {
-                return input.value.replace(/\D/g, "");
-            };
-            let onPhoneIntup = function(e) {
-                let input = e.target;
-                let inputNumberValue = getInputNumberOnly(input);
-                let formattedInpuValue = "";
-                let selectionStart = input.selectionStart;
-                if (!inputNumberValue) return input.value = "";
-                if (input.value.length != selectionStart) {
-                    if (e.data && /\D/g.test(e.data)) input.value = inputNumberValue;
-                    return;
-                }
-                if (inputNumberValue > -1) {
-                    let firstSimbols = "1" == inputNumberValue[0] ? "+1 " : "+1 (" + inputNumberValue;
-                    formattedInpuValue = firstSimbols;
-                    if (inputNumberValue.length > 1) formattedInpuValue += "(" + inputNumberValue.substring(1, 4);
-                    if (inputNumberValue.length >= 5) formattedInpuValue += ") " + inputNumberValue.substring(4, 7);
-                    if (inputNumberValue.length >= 8) formattedInpuValue += "-" + inputNumberValue.substring(7, 11);
-                } else formattedInpuValue.substring();
-                input.value = formattedInpuValue;
-            };
-            let onPhoneKeyDown = function(e) {
-                let input = e.target;
-                if (8 == e.keyCode && 1 == getInputNumberOnly(input).length) input.value = "";
-            };
-            let onPhonePaste = function(e) {
-                let pasted = e.clipboardData || window.clipboardData;
-                let input = e.target;
-                let inputNumberValue = getInputNumberOnly(input);
-                if (pasted) {
-                    let pastedText = pasted.getData("Text");
-                    if (/\D/g.test(pastedText)) input.value = inputNumberValue;
-                }
-            };
-            for (let i = 0; i < phoneInputs.length; i++) {
-                let input = phoneInputs[i];
-                input.addEventListener("input", onPhoneIntup);
-                input.addEventListener("keydown", onPhoneKeyDown);
-                input.addEventListener("paste", onPhonePaste);
-            }
-        }
-        document.addEventListener("formSent", (function(e) {
-            const currentForm = e.detail.form;
-            if (currentForm) {
-                const formButton = document.querySelector(".form__btn");
-                formButton.innerText = "Request has been Sent";
-            }
-        }));
-        /*!
  * CSSRulePlugin 3.9.1
  * https://greensock.com
  *
@@ -5565,7 +4358,7 @@
 */
         var CSSRulePlugin_gsap, CSSRulePlugin_coreInitted, CSSRulePlugin_doc, CSSRulePlugin_CSSPlugin, CSSRulePlugin_windowExists = function _windowExists() {
             return "undefined" !== typeof window;
-        }, CSSRulePlugin_getGSAP = function _getGSAP() {
+        }, _getGSAP = function _getGSAP() {
             return CSSRulePlugin_gsap || CSSRulePlugin_windowExists() && (CSSRulePlugin_gsap = window.gsap) && CSSRulePlugin_gsap.registerPlugin && CSSRulePlugin_gsap;
         }, _checkRegister = function _checkRegister() {
             if (!CSSRulePlugin_coreInitted) {
@@ -5574,7 +4367,7 @@
             }
             return CSSRulePlugin_coreInitted;
         }, CSSRulePlugin_initCore = function _initCore(core) {
-            CSSRulePlugin_gsap = core || CSSRulePlugin_getGSAP();
+            CSSRulePlugin_gsap = core || _getGSAP();
             if (CSSRulePlugin_windowExists()) {
                 window;
                 CSSRulePlugin_doc = document;
@@ -5627,9 +4420,534 @@
             },
             register: CSSRulePlugin_initCore
         };
-        CSSRulePlugin_getGSAP() && CSSRulePlugin_gsap.registerPlugin(CSSRulePlugin);
+        _getGSAP() && CSSRulePlugin_gsap.registerPlugin(CSSRulePlugin);
         gsapWithCSS.registerPlugin(CSSRulePlugin);
+        const indexes = document.querySelectorAll(".preloader__subtitle svg > path");
+        if (indexes) {
+            const tl = gsapWithCSS.timeline({
+                defaults: {
+                    opacity: 1,
+                    ease: "linear",
+                    autoAlpha: 0,
+                    duration: 1
+                }
+            });
+            tl.from(".preloader__subtitle svg > path", {
+                stagger: .04
+            });
+        }
+        let preloader_images = document.querySelectorAll(".wrapper img"), imagesTotalCount = preloader_images.length, imagesLoadedCount = 0, showPecentLoad = document.querySelector(".preloader__load-percent");
+        for (let i = 0; i < imagesTotalCount; i++) {
+            const imgClone = document.createElement("img");
+            imgClone.onload = imageLoaded;
+            imgClone.onerror = imageLoaded;
+            preloader_images[i].dataset.src ? imgClone.src = preloader_images[i].dataset.src : imgClone.src = preloader_images[i].src;
+        }
+        function imageLoaded() {
+            imagesLoadedCount++;
+            showPecentLoad.innerText = Math.round(100 / imagesTotalCount * imagesLoadedCount) + "%";
+            imagesLoadedCount == preloader_images.length ? preloader_addLoadedClass() : "";
+        }
+        function preloader_addLoadedClass() {
+            const htmlDucument = document.documentElement;
+            setTimeout((() => {
+                htmlDucument.classList.add("loaded");
+                if (htmlDucument.closest(".loaded")) {
+                    const headerContainerBefore = CSSRulePlugin.getRule(".header__container:before");
+                    const headerButtonsrBefore = CSSRulePlugin.getRule(".header__buttons:before");
+                    if (script_innerWidth >= 767.98) gsapWithCSS.timeline().to(".wrapper", {
+                        duration: .7,
+                        opacity: 1
+                    }).to(headerContainerBefore, {
+                        duration: .3,
+                        cssRule: {
+                            width: "96.5%"
+                        }
+                    }).to(headerButtonsrBefore, {
+                        duration: .3,
+                        cssRule: {
+                            height: "100%"
+                        }
+                    }, "-=0.3").from(".header__logo", {
+                        opacity: 0,
+                        stagger: .02,
+                        x: -20,
+                        duration: .3
+                    }).from(".header__buttons", {
+                        opacity: 0,
+                        x: 20,
+                        stagger: .02
+                    }, "-=0.2").from(".menu__list li", {
+                        opacity: 0,
+                        y: 20,
+                        stagger: .02
+                    }, "-=0.3").from(".header__contacts a", {
+                        opacity: 0,
+                        y: 20,
+                        stagger: .02
+                    }, "-=0.3"); else gsapWithCSS.to(".wrapper", {
+                        duration: .7,
+                        opacity: 1
+                    });
+                }
+            }), 1500);
+        }
         var smooth_scroll_polyfills_min = __webpack_require__(2);
+        (function() {
+            var defaultOptions = {
+                frameRate: 150,
+                animationTime: 400,
+                stepSize: 40,
+                pulseAlgorithm: true,
+                pulseScale: 4,
+                pulseNormalize: 1,
+                accelerationDelta: 50,
+                accelerationMax: 3,
+                keyboardSupport: true,
+                arrowScroll: 50,
+                fixedBackground: true,
+                excluded: ""
+            };
+            var options = defaultOptions;
+            var isExcluded = false;
+            var isFrame = false;
+            var direction = {
+                x: 0,
+                y: 0
+            };
+            var initDone = false;
+            var root = document.documentElement;
+            var activeElement;
+            var observer;
+            var refreshSize;
+            var deltaBuffer = [];
+            var deltaBufferTimer;
+            var isMac = /^Mac/.test(navigator.platform);
+            var key = {
+                left: 37,
+                up: 38,
+                right: 39,
+                down: 40,
+                spacebar: 32,
+                pageup: 33,
+                pagedown: 34,
+                end: 35,
+                home: 36
+            };
+            var arrowKeys = {
+                37: 1,
+                38: 1,
+                39: 1,
+                40: 1
+            };
+            function initTest() {
+                if (options.keyboardSupport) addEvent("keydown", keydown);
+            }
+            function init() {
+                if (initDone || !document.body) return;
+                initDone = true;
+                var body = document.body;
+                var html = document.documentElement;
+                var windowHeight = window.innerHeight;
+                var scrollHeight = body.scrollHeight;
+                root = document.compatMode.indexOf("CSS") >= 0 ? html : body;
+                activeElement = body;
+                initTest();
+                if (top != self) isFrame = true; else if (isOldSafari && scrollHeight > windowHeight && (body.offsetHeight <= windowHeight || html.offsetHeight <= windowHeight)) {
+                    var fullPageElem = document.createElement("div");
+                    fullPageElem.style.cssText = "position:absolute; z-index:-10000; " + "top:0; left:0; right:0; height:" + root.scrollHeight + "px";
+                    document.body.appendChild(fullPageElem);
+                    var pendingRefresh;
+                    refreshSize = function() {
+                        if (pendingRefresh) return;
+                        pendingRefresh = setTimeout((function() {
+                            if (isExcluded) return;
+                            fullPageElem.style.height = "0";
+                            fullPageElem.style.height = root.scrollHeight + "px";
+                            pendingRefresh = null;
+                        }), 500);
+                    };
+                    setTimeout(refreshSize, 10);
+                    addEvent("resize", refreshSize);
+                    var config = {
+                        attributes: true,
+                        childList: true,
+                        characterData: false
+                    };
+                    observer = new MutationObserver(refreshSize);
+                    observer.observe(body, config);
+                    if (root.offsetHeight <= windowHeight) {
+                        var clearfix = document.createElement("div");
+                        clearfix.style.clear = "both";
+                        body.appendChild(clearfix);
+                    }
+                }
+                if (!options.fixedBackground && !isExcluded) {
+                    body.style.backgroundAttachment = "scroll";
+                    html.style.backgroundAttachment = "scroll";
+                }
+            }
+            function cleanup() {
+                observer && observer.disconnect();
+                removeEvent(wheelEvent, wheel);
+                removeEvent("mousedown", mousedown);
+                removeEvent("keydown", keydown);
+                removeEvent("resize", refreshSize);
+                removeEvent("load", init);
+            }
+            var que = [];
+            var pending = false;
+            var lastScroll = Date.now();
+            function scrollArray(elem, left, top) {
+                directionCheck(left, top);
+                if (1 != options.accelerationMax) {
+                    var now = Date.now();
+                    var elapsed = now - lastScroll;
+                    if (elapsed < options.accelerationDelta) {
+                        var factor = (1 + 50 / elapsed) / 2;
+                        if (factor > 1) {
+                            factor = Math.min(factor, options.accelerationMax);
+                            left *= factor;
+                            top *= factor;
+                        }
+                    }
+                    lastScroll = Date.now();
+                }
+                que.push({
+                    x: left,
+                    y: top,
+                    lastX: left < 0 ? .99 : -.99,
+                    lastY: top < 0 ? .99 : -.99,
+                    start: Date.now()
+                });
+                if (pending) return;
+                var scrollRoot = getScrollRoot();
+                var isWindowScroll = elem === scrollRoot || elem === document.body;
+                if (null == elem.$scrollBehavior && isScrollBehaviorSmooth(elem)) {
+                    elem.$scrollBehavior = elem.style.scrollBehavior;
+                    elem.style.scrollBehavior = "auto";
+                }
+                var step = function(time) {
+                    var now = Date.now();
+                    var scrollX = 0;
+                    var scrollY = 0;
+                    for (var i = 0; i < que.length; i++) {
+                        var item = que[i];
+                        var elapsed = now - item.start;
+                        var finished = elapsed >= options.animationTime;
+                        var position = finished ? 1 : elapsed / options.animationTime;
+                        if (options.pulseAlgorithm) position = pulse(position);
+                        var x = item.x * position - item.lastX >> 0;
+                        var y = item.y * position - item.lastY >> 0;
+                        scrollX += x;
+                        scrollY += y;
+                        item.lastX += x;
+                        item.lastY += y;
+                        if (finished) {
+                            que.splice(i, 1);
+                            i--;
+                        }
+                    }
+                    if (isWindowScroll) window.scrollBy(scrollX, scrollY); else {
+                        if (scrollX) elem.scrollLeft += scrollX;
+                        if (scrollY) elem.scrollTop += scrollY;
+                    }
+                    if (!left && !top) que = [];
+                    if (que.length) requestFrame(step, elem, 1e3 / options.frameRate + 1); else {
+                        pending = false;
+                        if (null != elem.$scrollBehavior) {
+                            elem.style.scrollBehavior = elem.$scrollBehavior;
+                            elem.$scrollBehavior = null;
+                        }
+                    }
+                };
+                requestFrame(step, elem, 0);
+                pending = true;
+            }
+            function wheel(event) {
+                if (!initDone) init();
+                var target = event.target;
+                if (event.defaultPrevented || event.ctrlKey) return true;
+                if (isNodeName(activeElement, "embed") || isNodeName(target, "embed") && /\.pdf/i.test(target.src) || isNodeName(activeElement, "object") || target.shadowRoot) return true;
+                var deltaX = -event.wheelDeltaX || event.deltaX || 0;
+                var deltaY = -event.wheelDeltaY || event.deltaY || 0;
+                if (isMac) {
+                    if (event.wheelDeltaX && isDivisible(event.wheelDeltaX, 120)) deltaX = -120 * (event.wheelDeltaX / Math.abs(event.wheelDeltaX));
+                    if (event.wheelDeltaY && isDivisible(event.wheelDeltaY, 120)) deltaY = -120 * (event.wheelDeltaY / Math.abs(event.wheelDeltaY));
+                }
+                if (!deltaX && !deltaY) deltaY = -event.wheelDelta || 0;
+                if (1 === event.deltaMode) {
+                    deltaX *= 40;
+                    deltaY *= 40;
+                }
+                var overflowing = overflowingAncestor(target);
+                if (!overflowing) {
+                    if (isFrame && isChrome) {
+                        Object.defineProperty(event, "target", {
+                            value: window.frameElement
+                        });
+                        return parent.wheel(event);
+                    }
+                    return true;
+                }
+                if (isTouchpad(deltaY)) return true;
+                if (Math.abs(deltaX) > 1.2) deltaX *= options.stepSize / 120;
+                if (Math.abs(deltaY) > 1.2) deltaY *= options.stepSize / 120;
+                scrollArray(overflowing, deltaX, deltaY);
+                event.preventDefault();
+                scheduleClearCache();
+            }
+            function keydown(event) {
+                var target = event.target;
+                var modifier = event.ctrlKey || event.altKey || event.metaKey || event.shiftKey && event.keyCode !== key.spacebar;
+                if (!document.body.contains(activeElement)) activeElement = document.activeElement;
+                var inputNodeNames = /^(textarea|select|embed|object)$/i;
+                var buttonTypes = /^(button|submit|radio|checkbox|file|color|image)$/i;
+                if (event.defaultPrevented || inputNodeNames.test(target.nodeName) || isNodeName(target, "input") && !buttonTypes.test(target.type) || isNodeName(activeElement, "video") || isInsideYoutubeVideo(event) || target.isContentEditable || modifier) return true;
+                if ((isNodeName(target, "button") || isNodeName(target, "input") && buttonTypes.test(target.type)) && event.keyCode === key.spacebar) return true;
+                if (isNodeName(target, "input") && "radio" == target.type && arrowKeys[event.keyCode]) return true;
+                var shift, x = 0, y = 0;
+                var overflowing = overflowingAncestor(activeElement);
+                if (!overflowing) return isFrame && isChrome ? parent.keydown(event) : true;
+                var clientHeight = overflowing.clientHeight;
+                if (overflowing == document.body) clientHeight = window.innerHeight;
+                switch (event.keyCode) {
+                  case key.up:
+                    y = -options.arrowScroll;
+                    break;
+
+                  case key.down:
+                    y = options.arrowScroll;
+                    break;
+
+                  case key.spacebar:
+                    shift = event.shiftKey ? 1 : -1;
+                    y = -shift * clientHeight * .9;
+                    break;
+
+                  case key.pageup:
+                    y = .9 * -clientHeight;
+                    break;
+
+                  case key.pagedown:
+                    y = .9 * clientHeight;
+                    break;
+
+                  case key.home:
+                    if (overflowing == document.body && document.scrollingElement) overflowing = document.scrollingElement;
+                    y = -overflowing.scrollTop;
+                    break;
+
+                  case key.end:
+                    var scroll = overflowing.scrollHeight - overflowing.scrollTop;
+                    var scrollRemaining = scroll - clientHeight;
+                    y = scrollRemaining > 0 ? scrollRemaining + 10 : 0;
+                    break;
+
+                  case key.left:
+                    x = -options.arrowScroll;
+                    break;
+
+                  case key.right:
+                    x = options.arrowScroll;
+                    break;
+
+                  default:
+                    return true;
+                }
+                scrollArray(overflowing, x, y);
+                event.preventDefault();
+                scheduleClearCache();
+            }
+            function mousedown(event) {
+                activeElement = event.target;
+            }
+            var uniqueID = function() {
+                var i = 0;
+                return function(el) {
+                    return el.uniqueID || (el.uniqueID = i++);
+                };
+            }();
+            var cacheX = {};
+            var cacheY = {};
+            var clearCacheTimer;
+            var smoothBehaviorForElement = {};
+            function scheduleClearCache() {
+                clearTimeout(clearCacheTimer);
+                clearCacheTimer = setInterval((function() {
+                    cacheX = cacheY = smoothBehaviorForElement = {};
+                }), 1 * 1e3);
+            }
+            function setCache(elems, overflowing, x) {
+                var cache = x ? cacheX : cacheY;
+                for (var i = elems.length; i--; ) cache[uniqueID(elems[i])] = overflowing;
+                return overflowing;
+            }
+            function getCache(el, x) {
+                return (x ? cacheX : cacheY)[uniqueID(el)];
+            }
+            function overflowingAncestor(el) {
+                var elems = [];
+                var body = document.body;
+                var rootScrollHeight = root.scrollHeight;
+                do {
+                    var cached = getCache(el, false);
+                    if (cached) return setCache(elems, cached);
+                    elems.push(el);
+                    if (rootScrollHeight === el.scrollHeight) {
+                        var topOverflowsNotHidden = overflowNotHidden(root) && overflowNotHidden(body);
+                        var isOverflowCSS = topOverflowsNotHidden || overflowAutoOrScroll(root);
+                        if (isFrame && isContentOverflowing(root) || !isFrame && isOverflowCSS) return setCache(elems, getScrollRoot());
+                    } else if (isContentOverflowing(el) && overflowAutoOrScroll(el)) return setCache(elems, el);
+                } while (el = el.parentElement);
+            }
+            function isContentOverflowing(el) {
+                return el.clientHeight + 10 < el.scrollHeight;
+            }
+            function overflowNotHidden(el) {
+                var overflow = getComputedStyle(el, "").getPropertyValue("overflow-y");
+                return "hidden" !== overflow;
+            }
+            function overflowAutoOrScroll(el) {
+                var overflow = getComputedStyle(el, "").getPropertyValue("overflow-y");
+                return "scroll" === overflow || "auto" === overflow;
+            }
+            function isScrollBehaviorSmooth(el) {
+                var id = uniqueID(el);
+                if (null == smoothBehaviorForElement[id]) {
+                    var scrollBehavior = getComputedStyle(el, "")["scroll-behavior"];
+                    smoothBehaviorForElement[id] = "smooth" == scrollBehavior;
+                }
+                return smoothBehaviorForElement[id];
+            }
+            function addEvent(type, fn, arg) {
+                window.addEventListener(type, fn, arg || false);
+            }
+            function removeEvent(type, fn, arg) {
+                window.removeEventListener(type, fn, arg || false);
+            }
+            function isNodeName(el, tag) {
+                return el && (el.nodeName || "").toLowerCase() === tag.toLowerCase();
+            }
+            function directionCheck(x, y) {
+                x = x > 0 ? 1 : -1;
+                y = y > 0 ? 1 : -1;
+                if (direction.x !== x || direction.y !== y) {
+                    direction.x = x;
+                    direction.y = y;
+                    que = [];
+                    lastScroll = 0;
+                }
+            }
+            if (window.localStorage && localStorage.SS_deltaBuffer) try {
+                deltaBuffer = localStorage.SS_deltaBuffer.split(",");
+            } catch (e) {}
+            function isTouchpad(deltaY) {
+                if (!deltaY) return;
+                if (!deltaBuffer.length) deltaBuffer = [ deltaY, deltaY, deltaY ];
+                deltaY = Math.abs(deltaY);
+                deltaBuffer.push(deltaY);
+                deltaBuffer.shift();
+                clearTimeout(deltaBufferTimer);
+                deltaBufferTimer = setTimeout((function() {
+                    try {
+                        localStorage.SS_deltaBuffer = deltaBuffer.join(",");
+                    } catch (e) {}
+                }), 1e3);
+                var dpiScaledWheelDelta = deltaY > 120 && allDeltasDivisableBy(deltaY);
+                var tp = !allDeltasDivisableBy(120) && !allDeltasDivisableBy(100) && !dpiScaledWheelDelta;
+                if (deltaY < 50) return true;
+                return tp;
+            }
+            function isDivisible(n, divisor) {
+                return Math.floor(n / divisor) == n / divisor;
+            }
+            function allDeltasDivisableBy(divisor) {
+                return isDivisible(deltaBuffer[0], divisor) && isDivisible(deltaBuffer[1], divisor) && isDivisible(deltaBuffer[2], divisor);
+            }
+            function isInsideYoutubeVideo(event) {
+                var elem = event.target;
+                var isControl = false;
+                if (-1 != document.URL.indexOf("www.youtube.com/watch")) do {
+                    isControl = elem.classList && elem.classList.contains("html5-video-controls");
+                    if (isControl) break;
+                } while (elem = elem.parentNode);
+                return isControl;
+            }
+            var requestFrame = function() {
+                return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback, element, delay) {
+                    window.setTimeout(callback, delay || 1e3 / 60);
+                };
+            }();
+            var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+            var getScrollRoot = function() {
+                var SCROLL_ROOT = document.scrollingElement;
+                return function() {
+                    if (!SCROLL_ROOT) {
+                        var dummy = document.createElement("div");
+                        dummy.style.cssText = "height:10000px;width:1px;";
+                        document.body.appendChild(dummy);
+                        var bodyScrollTop = document.body.scrollTop;
+                        document.documentElement.scrollTop;
+                        window.scrollBy(0, 3);
+                        if (document.body.scrollTop != bodyScrollTop) SCROLL_ROOT = document.body; else SCROLL_ROOT = document.documentElement;
+                        window.scrollBy(0, -3);
+                        document.body.removeChild(dummy);
+                    }
+                    return SCROLL_ROOT;
+                };
+            }();
+            function pulse_(x) {
+                var val, start, expx;
+                x *= options.pulseScale;
+                if (x < 1) val = x - (1 - Math.exp(-x)); else {
+                    start = Math.exp(-1);
+                    x -= 1;
+                    expx = 1 - Math.exp(-x);
+                    val = start + expx * (1 - start);
+                }
+                return val * options.pulseNormalize;
+            }
+            function pulse(x) {
+                if (x >= 1) return 1;
+                if (x <= 0) return 0;
+                if (1 == options.pulseNormalize) options.pulseNormalize /= pulse_(1);
+                return pulse_(x);
+            }
+            var userAgent = window.navigator.userAgent;
+            var isEdge = /Edge/.test(userAgent);
+            var isChrome = /chrome/i.test(userAgent) && !isEdge;
+            var isSafari = /safari/i.test(userAgent) && !isEdge;
+            var isMobile = /mobile/i.test(userAgent);
+            var isIEWin7 = /Windows NT 6.1/i.test(userAgent) && /rv:11/i.test(userAgent);
+            var isOldSafari = isSafari && (/Version\/8/i.test(userAgent) || /Version\/9/i.test(userAgent));
+            var isEnabledForBrowser = (isChrome || isSafari || isIEWin7) && !isMobile;
+            var supportsPassive = false;
+            try {
+                window.addEventListener("test", null, Object.defineProperty({}, "passive", {
+                    get: function() {
+                        supportsPassive = true;
+                    }
+                }));
+            } catch (e) {}
+            var wheelOpt = supportsPassive ? {
+                passive: false
+            } : false;
+            var wheelEvent = "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
+            if (wheelEvent && isEnabledForBrowser) {
+                addEvent(wheelEvent, wheel, wheelOpt);
+                addEvent("mousedown", mousedown);
+                addEvent("load", init);
+            }
+            function SmoothScroll(optionsToSet) {
+                for (var key in optionsToSet) if (defaultOptions.hasOwnProperty(key)) options[key] = optionsToSet[key];
+            }
+            SmoothScroll.destroy = cleanup;
+            if (window.SmoothScrollOptions) SmoothScroll(window.SmoothScrollOptions);
+            if ("function" === typeof define && define.amd) define((function() {
+                return SmoothScroll;
+            })); else if ("object" == typeof exports) module.exports = SmoothScroll; else window.SmoothScroll = SmoothScroll;
+        })();
         let gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
             const targetBlockElement = document.querySelector(targetBlock);
             if (targetBlockElement) {
@@ -9654,100 +8972,6 @@
             class_loaded: "_lazy-loaded",
             use_native: true
         });
-        class ScrollWatcher {
-            constructor(props) {
-                let defaultConfig = {
-                    logging: true
-                };
-                this.config = Object.assign(defaultConfig, props);
-                this.observer;
-                !document.documentElement.classList.contains("watcher") ? this.scrollWatcherRun() : null;
-            }
-            scrollWatcherUpdate() {
-                this.scrollWatcherRun();
-            }
-            scrollWatcherRun() {
-                document.documentElement.classList.add("watcher");
-                this.scrollWatcherConstructor(document.querySelectorAll("[data-watch]"));
-            }
-            scrollWatcherConstructor(items) {
-                if (items.length) {
-                    this.scrollWatcherLogging(`Проснулся, слежу за объектами (${items.length})...`);
-                    let uniqParams = uniqArray(Array.from(items).map((function(item) {
-                        return `${item.dataset.watchRoot ? item.dataset.watchRoot : null}|${item.dataset.watchMargin ? item.dataset.watchMargin : "0px"}|${item.dataset.watchThreshold ? item.dataset.watchThreshold : 0}`;
-                    })));
-                    uniqParams.forEach((uniqParam => {
-                        let uniqParamArray = uniqParam.split("|");
-                        let paramsWatch = {
-                            root: uniqParamArray[0],
-                            margin: uniqParamArray[1],
-                            threshold: uniqParamArray[2]
-                        };
-                        let groupItems = Array.from(items).filter((function(item) {
-                            let watchRoot = item.dataset.watchRoot ? item.dataset.watchRoot : null;
-                            let watchMargin = item.dataset.watchMargin ? item.dataset.watchMargin : "0px";
-                            let watchThreshold = item.dataset.watchThreshold ? item.dataset.watchThreshold : 0;
-                            if (String(watchRoot) === paramsWatch.root && String(watchMargin) === paramsWatch.margin && String(watchThreshold) === paramsWatch.threshold) return item;
-                        }));
-                        let configWatcher = this.getScrollWatcherConfig(paramsWatch);
-                        this.scrollWatcherInit(groupItems, configWatcher);
-                    }));
-                } else this.scrollWatcherLogging("Сплю, нет объектов для слежения. ZzzZZzz");
-            }
-            getScrollWatcherConfig(paramsWatch) {
-                let configWatcher = {};
-                if (document.querySelector(paramsWatch.root)) configWatcher.root = document.querySelector(paramsWatch.root); else if ("null" !== paramsWatch.root) this.scrollWatcherLogging(`Эмм... родительского объекта ${paramsWatch.root} нет на странице`);
-                configWatcher.rootMargin = paramsWatch.margin;
-                if (paramsWatch.margin.indexOf("px") < 0 && paramsWatch.margin.indexOf("%") < 0) {
-                    this.scrollWatcherLogging(`Ой ой, настройку data-watch-margin нужно задавать в PX или %`);
-                    return;
-                }
-                if ("prx" === paramsWatch.threshold) {
-                    paramsWatch.threshold = [];
-                    for (let i = 0; i <= 1; i += .005) paramsWatch.threshold.push(i);
-                } else paramsWatch.threshold = paramsWatch.threshold.split(",");
-                configWatcher.threshold = paramsWatch.threshold;
-                return configWatcher;
-            }
-            scrollWatcherCreate(configWatcher) {
-                this.observer = new IntersectionObserver(((entries, observer) => {
-                    entries.forEach((entry => {
-                        this.scrollWatcherCallback(entry, observer);
-                    }));
-                }), configWatcher);
-            }
-            scrollWatcherInit(items, configWatcher) {
-                this.scrollWatcherCreate(configWatcher);
-                items.forEach((item => this.observer.observe(item)));
-            }
-            scrollWatcherIntersecting(entry, targetElement) {
-                if (entry.isIntersecting) {
-                    !targetElement.classList.contains("_watcher-view") ? targetElement.classList.add("_watcher-view") : null;
-                    this.scrollWatcherLogging(`Я вижу ${targetElement.classList}, добавил класс _watcher-view`);
-                } else {
-                    targetElement.classList.contains("_watcher-view") ? targetElement.classList.remove("_watcher-view") : null;
-                    this.scrollWatcherLogging(`Я не вижу ${targetElement.classList}, убрал класс _watcher-view`);
-                }
-            }
-            scrollWatcherOff(targetElement, observer) {
-                observer.unobserve(targetElement);
-                this.scrollWatcherLogging(`Я перестал следить за ${targetElement.classList}`);
-            }
-            scrollWatcherLogging(message) {
-                this.config.logging ? FLS(`[Наблюдатель]: ${message}`) : null;
-            }
-            scrollWatcherCallback(entry, observer) {
-                const targetElement = entry.target;
-                this.scrollWatcherIntersecting(entry, targetElement);
-                targetElement.hasAttribute("data-watch-once") && entry.isIntersecting ? this.scrollWatcherOff(targetElement, observer) : null;
-                document.dispatchEvent(new CustomEvent("watcherCallback", {
-                    detail: {
-                        entry
-                    }
-                }));
-            }
-        }
-        flsModules.watcher = new ScrollWatcher({});
         let addWindowScrollEvent = false;
         function pageNavigation() {
             document.addEventListener("click", pageNavigationAction);
@@ -9759,11 +8983,9 @@
                         const gotoLink = targetElement.closest("[data-goto]");
                         const gotoLinkSelector = gotoLink.dataset.goto ? gotoLink.dataset.goto : "";
                         const noHeader = gotoLink.hasAttribute("data-goto-header") ? true : false;
-                        const gotoSpeed = gotoLink.dataset.gotoSpeed ? gotoLink.dataset.gotoSpeed : 500;
+                        const gotoSpeed = gotoLink.dataset.gotoSpeed ? gotoLink.dataset.gotoSpeed : 1500;
                         const offsetTop = gotoLink.dataset.gotoTop ? parseInt(gotoLink.dataset.gotoTop) : 0;
                         gotoBlock(gotoLinkSelector, noHeader, gotoSpeed, offsetTop);
-                        console.log();
-                        setTimeout((() => {}), gotoSpeed + 30);
                         e.preventDefault();
                     }
                 } else if ("watcherCallback" === e.type && e.detail) {
