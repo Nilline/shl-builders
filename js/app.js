@@ -4569,22 +4569,20 @@
                 }));
             }
             function setSizesSections() {
-                qe("#sc1").parentElement.style.paddingBottom = qe("#sc1").offsetHeight + "px";
-                qe("#sc1").classList.add("fixed");
-                qe("#sc2").parentElement.style.paddingBottom = 2.5 * qe("#sc2").offsetHeight + "px";
-                qe("#sc2").classList.add("fixed");
-                qe("#sc4").parentElement.style.paddingBottom = 2.5 * qe("#sc4").offsetHeight + "px";
-                qe("#sc4").classList.add("fixed");
-                qe("#sc5").parentElement.style.paddingBottom = 2 * qe("#sc5").offsetHeight + "px";
-                qe("#sc5").classList.add("fixed");
-                qe("#sc6").parentElement.style.paddingBottom = qe("#sc6").offsetHeight + "px";
-                qe("#sc6").classList.add("fixed");
-                qe("#sc7").parentElement.style.paddingBottom = qe("#sc7").offsetHeight + "px";
-                qe("#sc7").classList.add("fixed");
-                qe("#sc8").parentElement.style.paddingBottom = 1.5 * qe("#sc8").offsetHeight + "px";
-                qe("#sc8").classList.add("fixed");
-                qe("#sc9").parentElement.style.paddingBottom = 2 * qe("#sc9").offsetHeight + "px";
-                qe("#sc9").classList.add("fixed");
+                if (sections.length) sections.forEach((section => {
+                    if (!section.closest("#sc3")) section.classList.add("fixed");
+                }));
+                function setPadding(name, size = 1) {
+                    qe(`${name}`).parentElement.style.paddingBottom = qe(`${name}`).offsetHeight * `${size}` + "px";
+                }
+                setPadding("#sc1");
+                setPadding("#sc2", 2.5);
+                setPadding("#sc4", 2.5);
+                setPadding("#sc5", 2);
+                setPadding("#sc6");
+                setPadding("#sc7");
+                setPadding("#sc8", 1.5);
+                setPadding("#sc9", 2);
             }
             function paginationVisible(v1, v2, v3, v4, scrProc, name = ".pagination-main") {
                 if (qe(".pagination-main")) {
