@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20220414103547">
+	<link rel="stylesheet" href="css/style.min.css?_v=20220414193550">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -278,28 +278,28 @@
 							<button data-goto="#sc1" type="button" class="pagination-main__button "></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto="#sc2" data-goto-top="43" type="button" class="pagination-main__button sc2"></button>
+							<button data-goto=".introduction" type="button" class="pagination-main__button sc2"></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto-top="480" data-goto="#sc3" type="button" class="pagination-main__button"></button>
+							<button data-goto=".introduction_video" type="button" class="pagination-main__button"></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto="#sc4" data-goto-top="790" type="button" class="pagination-main__button"></button>
+							<button data-goto="#promise" type="button" class="pagination-main__button"></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto="#sc5" data-goto-top="810" type="button" class="pagination-main__button"></button>
+							<button data-goto="#video-sc5" type="button" class="pagination-main__button"></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto="#sc6" data-goto-top="-40" type="button" class="pagination-main__button"></button>
+							<button data-goto="#advantages" type="button" class="pagination-main__button"></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto="#sc7" type="button" class="pagination-main__button"></button>
+							<button data-goto="#video-sc7" type="button" class="pagination-main__button"></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto="#sc8" type="button" class="pagination-main__button"></button>
+							<button data-goto="#team" type="button" class="pagination-main__button"></button>
 						</li>
 						<li class="pagination-main__item">
-							<button data-goto="#sc9" type="button" class="pagination-main__button"></button>
+							<button data-goto="#video-sc9" type="button" class="pagination-main__button"></button>
 						</li>
 					</ul>
 				</nav>
@@ -431,7 +431,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="introduction">
+			<section class="introduction introduction_video">
 				<div id="sc2" data-fullscreen data-watch="navigator" data-watch-threshold='1' class="introduction__body">
 					<div class="introduction__container">
 						<div class="introduction__wrapper">
@@ -489,7 +489,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="promise">
+			<section id="promise" class="promise">
 				<div id="sc4" data-watch="navigator" data-watch-threshold='1' data-fullscreen class="promise__wrapper">
 					<div class="promise__container">
 						<div class="promise__first-box">
@@ -505,14 +505,14 @@
 					</div>
 				</div>
 			</section>
-			<div class="video">
+			<div id="video-sc5" class="video">
 				<div id="sc5" data-watch="navigator" data-watch-threshold='0.49' data-fullscreen class="promise__video">
 					<div class="video__wrapper">
 						<video data-src="files/video/video_2.mp4" autoplay muted playsinline loop class="video__second"></video>
 					</div>
 				</div>
 			</div>
-			<div class="advantages">
+			<div id="advantages" class="advantages">
 				<div id="sc6" data-watch="navigator" data-watch="navigator" data-watch-threshold='0.49' data-fullscreen class="advantages__wrapper">
 					<img class="advantages__bg" data-src="img/main_slider/1.jpg" alt="main image">
 					<div class="advantages__body">
@@ -545,14 +545,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="video">
+			<div id="video-sc7" class="video">
 				<div id="sc7" data-watch="navigator" data-watch="navigator" data-watch-threshold='0.49' data-fullscreen class="advantages__video">
 					<div class="video__wrapper">
 						<video data-src="files/video/video_3.mp4" autoplay muted playsinline loop class="video__third"></video>
 					</div>
 				</div>
 			</div>
-			<section class="team">
+			<section id="team" class="team">
 				<div id="sc8" data-watch="navigator" data-watch="navigator" data-watch-threshold='0.49' data-fullscreen class="team__wrapper">
 					<img class="team__bg" data-src="img/team_main.jpg" alt="team">
 					<div class="team__container">
@@ -563,7 +563,7 @@
 					</div>
 				</div>
 			</section>
-			<div class="video">
+			<div id="video-sc9" class="video">
 				<div id="sc9" data-watch="navigator" data-watch-threshold='0.49' data-fullscreen class="team__video">
 					<div class="video__wrapper">
 						<video data-src="files/video/video_4.mp4" autoplay muted playsinline loop class="video__fourth"></video>
@@ -721,7 +721,7 @@
 			</div>
 		</footer>
 	</div>
-	<script src="js/app.min.js?_v=20220414103547"></script>
+	<script src="js/app.min.js?_v=20220414193550"></script>
 </body>
 
 </html>
