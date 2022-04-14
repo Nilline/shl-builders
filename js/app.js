@@ -4655,7 +4655,10 @@
                                 qe("#sc3").style.position = "fixed";
                                 qe(".introduction__description").style.opacity = 0;
                                 qe(".introduction__btn-box").style.opacity = 0;
-                                qe(".introduction__title-block").style.transform = `scale(${2 * (1 + 400 / 175 * (scrProc - 100))})`;
+                                qe(".introduction__title-block").style.transform = `scale(${easeInQuart(scrProc - 100, 1, 599, 100)})`;
+                            }
+                            function easeInQuart(t, b, c, d) {
+                                return c * (t /= d) * t * t * t + b;
                             }
                             if (scrProc < 100) {
                                 qe("#sc3").style.opacity = 0;
@@ -4663,10 +4666,10 @@
                                 qe(".introduction__description").style.removeProperty("opacity");
                                 qe(".introduction__btn-box").style.removeProperty("opacity");
                             }
-                            if (scrProc > 110 && scrProc < 250) {
-                                qe(".introduction__rect").setAttribute("fill", `rgba(0,0,0,${1 - 1 / 25 * (scrProc - 110)})`);
-                                qe("#sc2").style.backgroundColor = `rgba(255,255,255,${1 - 1 / 25 * (scrProc - 110)})`;
-                            }
+                            if (scrProc > 110 && scrProc < 250) if (scrProc > 150) {
+                                qe(".introduction__rect").setAttribute("fill", `rgba(0,0,0,${1 - 1 / 25 * (scrProc - 150)})`);
+                                qe("#sc2").style.backgroundColor = `rgba(255,255,255,${1 - 1 / 25 * (scrProc - 150)})`;
+                            } else if (scrProc < 150) qe("#sc2").style.backgroundColor = `rgba(255,255,255,1)`;
                             if (scrProc > 225 && scrProc < 250) {
                                 qe("#sc3").style.opacity = 1 - 1 / 25 * (scrProc - 225);
                                 qe("#sc3").style.zIndex = 1;
