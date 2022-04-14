@@ -909,12 +909,12 @@
                     function actionsScroll(e) {
                         let scroll = window.scrollY;
                         qe("#sc1").parentElement.style.paddingBottom = qe("#sc1").offsetHeight + "px";
-                        qe("#sc2").parentElement.style.paddingBottom = 2 * qe("#sc2").offsetHeight + "px";
-                        qe("#sc4").parentElement.style.paddingBottom = 2 * qe("#sc4").offsetHeight + "px";
+                        qe("#sc2").parentElement.style.paddingBottom = 2.5 * qe("#sc2").offsetHeight + "px";
+                        qe("#sc4").parentElement.style.paddingBottom = 2.5 * qe("#sc4").offsetHeight + "px";
                         qe("#sc5").parentElement.style.paddingBottom = 2 * qe("#sc5").offsetHeight + "px";
                         qe("#sc6").parentElement.style.paddingBottom = qe("#sc6").offsetHeight + "px";
                         qe("#sc7").parentElement.style.paddingBottom = qe("#sc7").offsetHeight + "px";
-                        qe("#sc8").parentElement.style.paddingBottom = qe("#sc8").offsetHeight + "px";
+                        qe("#sc8").parentElement.style.paddingBottom = 1.5 * qe("#sc8").offsetHeight + "px";
                         qe("#sc9").parentElement.style.paddingBottom = 2 * qe("#sc9").offsetHeight + "px";
                         if (scroll < qe("#sc1").offsetHeight) {
                             let scr = scroll - qe("#sc1").offsetTop;
@@ -930,33 +930,38 @@
                             qe("#sc2").parentElement.style.removeProperty("padding-top");
                             qe("#sc2").classList.add("fixed");
                             qe("#sc2").style.opacity = 1;
-                            qe(".introduction__title").style.transform = `translateY(${h / 1.5 + "px"})`;
+                            qe(".introduction__title-block").style.transform = `translateY(${h / 1.5 + "px"})`;
                             qe(".introduction__description").style.transform = `translateY(${h / 1.5 + "px"})`;
                             qe(".introduction__btn-box").style.transform = `translateY(${h / 1.5 + "px"})`;
                             qe("#sc4").classList.remove("fixed");
                             blocksVisibility("#sc2", "#sc3");
-                            if (scrProc < 25) qe(".introduction__title").style.transform = `translateY(${h / 1.5 - h / 1.5 / 100 * (4 * scrProc) + "px"})`; else if (scrProc > 25 && scrProc < 100) qe(".introduction__title").style.removeProperty("transform");
+                            if (scrProc < 25) qe(".introduction__title-block").style.transform = `translateY(${h / 1.5 - h / 1.5 / 100 * (4 * scrProc) + "px"})`; else if (scrProc > 25 && scrProc < 100) qe(".introduction__title-block").style.removeProperty("transform");
                             if (scrProc > 25 && scrProc < 50) qe(".introduction__description").style.transform = `translateY(${h / 1.5 - h / 1.5 / 100 * (4 * (scrProc - 25)) + "px"})`; else if (scrProc > 50) qe(".introduction__description").style.removeProperty("transform");
                             if (scrProc > 30 && scrProc < 60) qe(".introduction__btn-box").style.transform = `translateY(${h / 1.5 - h / 1.5 / 100 * (3.33 * (scrProc - 30)) + "px"})`; else if (scrProc > 60) qe(".introduction__btn-box").style.removeProperty("transform");
-                            if (scrProc > 100 && scrProc < 150) {
+                            if (scrProc > 100 && scrProc < 225) {
                                 qe("#sc3").style.opacity = 1;
                                 qe("#sc3").style.position = "fixed";
                                 qe(".introduction__description").style.opacity = 0;
                                 qe(".introduction__btn-box").style.opacity = 0;
-                                qe(".introduction__title").style.transform = `scale(${2 * (1 + 65 / 100 * (scrProc - 100))})`;
+                                qe(".introduction__title-block").style.transform = `scale(${2 * (1 + 400 / 175 * (scrProc - 100))})`;
                             } else if (scrProc < 100) {
                                 qe("#sc3").style.opacity = 0;
                                 qe("#sc3").style.position = "absolute";
                                 qe(".introduction__description").style.removeProperty("opacity");
                                 qe(".introduction__btn-box").style.removeProperty("opacity");
                             }
-                            if (scrProc > 125 && scrProc < 150) qe("#sc2").style.opacity = 1 - 1 / 25 * (scrProc - 125); else if (scrProc > 150) qe("#sc2").style.opacity = 0;
-                            if (scrProc > 175 && scrProc < 200) {
-                                qe("#sc3").style.opacity = 1 - 1 / 25 * (scrProc - 175);
+                            if (scrProc > 110 && scrProc < 250) {
+                                qe(".introduction__rect").setAttribute("fill", `rgba(0,0,0,${1 - 1 / 25 * (scrProc - 110)})`);
+                                qe("#sc2").style.backgroundColor = `rgba(255,255,255,${1 - 1 / 25 * (scrProc - 110)})`;
+                            }
+                            if (scrProc > 225 && scrProc < 250) {
+                                qe("#sc3").style.opacity = 1 - 1 / 25 * (scrProc - 225);
                                 qe("#sc3").style.zIndex = 1;
                                 qe("body").style.backgroundColor = "#000";
                                 qe("#sc3").style.position = "fixed";
-                            } else if (scrProc < 175) {
+                                qe(".introduction__title-block").style.opacity = 0;
+                            } else if (scrProc < 225) {
+                                qe(".introduction__title-block").style.opacity = 1;
                                 qe("#sc3").style.zIndex = -1;
                                 qe("body").style.removeProperty("background-color");
                             }
@@ -968,32 +973,33 @@
                             qe("body").style.backgroundColor = "#000";
                             qe("#sc3").style.position = "absolute";
                             qe("#sc4").classList.add("fixed");
-                            qe(".promise__title").style.transform = `translateX(${(w - 2 * w) / 1.35 - (w - 2 * w) / 1.35 / 100 + "px"})`;
-                            qe(".promise__cover-btn").style.transform = `translateX(${(w - 2 * w) / 1.35 - (w - 2 * w) / 1.35 / 100 + "px"})`;
+                            qe(".promise__title").style.transform = `translateX(${(w - 2 * w) / 1.5 - (w - 2 * w) / 1.5 / 100 + "px"})`;
+                            qe(".promise__cover-btn").style.transform = `translateX(${(w - 2 * w) / 1.5 - (w - 2 * w) / 1.5 / 100 + "px"})`;
                             if (scrProc < 25) qe("#sc4").style.opacity = 0 + 1 / 25 * scrProc; else if (scrProc > 150) ; else qe("#sc4").style.opacity = 1;
                             if (scrProc < 150) qe(".promise__container").style.removeProperty("transform");
                             if (scrProc > 25 && scrProc < 50) qe(".promise__title").style.transform = `translateX(${(w - 2 * w) / 2 - (w - 2 * w) / 2 / 100 * (4 * (scrProc - 25)) + "px"})`; else if (scrProc > 50) qe(".promise__title").style.removeProperty("transform");
                             if (scrProc < 50) qea(".promise__pragraph").forEach((p => p.style.transform = `translateY(${h / 1.35 / 100 * 100 + "px"})`));
-                            if (scrProc > 50 && scrProc < 100) qea(".promise__pragraph").forEach(((p, i) => {
-                                if (scrProc > 50 && scrProc < 60) {
-                                    if (0 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 50)) + "px"})`;
-                                } else if (scrProc > 60 && scrProc < 70) {
+                            if (scrProc > 50 && scrProc < 150) qea(".promise__pragraph").forEach(((p, i) => {
+                                if (scrProc > 50 && scrProc < 70) {
+                                    if (0 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 20 * (scrProc - 50) + "px"})`;
+                                } else if (scrProc > 70 && scrProc < 90) {
                                     if (0 == i) p.style.removeProperty("transform");
-                                    if (1 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 60)) + "px"})`;
-                                } else if (scrProc > 70 && scrProc < 80) {
+                                    if (1 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 20 * (scrProc - 70) + "px"})`;
+                                } else if (scrProc > 90 && scrProc < 110) {
                                     if (1 == i) p.style.removeProperty("transform");
-                                    if (2 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 70)) + "px"})`;
-                                } else if (scrProc > 80 && scrProc < 90) {
+                                    if (2 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 20 * (scrProc - 90) + "px"})`;
+                                } else if (scrProc > 110 && scrProc < 130) {
                                     if (2 == i) p.style.removeProperty("transform");
-                                    if (3 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 100 * (10 * (scrProc - 80)) + "px"})`;
-                                } else if (scrProc > 90 && scrProc < 100) {
-                                    qe(".promise__cover-btn").style.transform = `translateX(${(w - 2 * w) / 2 - (w - 2 * w) / 2 / 100 * (10 * (scrProc - 90)) + "px"})`;
+                                    if (3 == i) p.style.transform = `translateY(${h / 1.35 - h / 1.35 / 20 * (scrProc - 110) + "px"})`;
+                                } else if (scrProc > 130 && scrProc < 150) {
+                                    qe(".promise__cover-btn").style.transform = `translateX(-${w / 2 - w / 2 / 20 * (scrProc - 130) + "px"})`;
                                     if (3 == i) p.style.removeProperty("transform");
-                                } else if (scrProc > 100) {
+                                } else if (scrProc > 150) {
                                     qe(".promise__cover-btn").style.removeProperty("transform");
                                     p.style.removeProperty("transform");
                                 }
                             }));
+                            console.log(scrProc);
                         }
                         if (scroll > qe("#sc4").parentElement.offsetTop + (qe("#sc4").parentElement.offsetHeight - qe("#sc4").offsetHeight) && scroll < qe("#sc5").parentElement.offsetTop) {
                             let scr = scroll - qe("#sc4").parentElement.offsetTop;
@@ -1005,10 +1011,11 @@
                             qe(".promise__title").style.removeProperty("transform");
                             qe(".promise__cover-btn").style.removeProperty("transform");
                             if (scrProc > 25) qe(".promise__container").style.removeProperty("transform");
-                            if (scrProc - 100 > 25) {
-                                qe(".promise__container").style.transform = `translateY(-${h / 100 * (1.5 * (scrProc - 125)) + "px"})`;
-                                qe("#sc4").style.opacity = 1 - 1 / 75 * (scrProc - 125);
+                            if (scrProc - 150 > 25) {
+                                qe(".promise__container").style.transform = `translateY(-${h / 100 * (1.5 * (scrProc - 175)) + "px"})`;
+                                qe("#sc4").style.opacity = 1 - 1 / 75 * (scrProc - 175);
                             }
+                            console.log(scrProc);
                             qe("#sc5").style.opacity = 0;
                         } else if (scroll > qe("#sc5").parentElement.offsetTop && scroll < qe("#sc6").parentElement.offsetTop) {
                             let scr = scroll - qe("#sc5").parentElement.offsetTop;
@@ -1090,10 +1097,20 @@
                             if (scrProc < 30) {
                                 qe(".team__content").style.transform = `translateY(${Math.round(h / 1.35 - h / 1.35 / 20) + "px"})`;
                                 qe("#sc8").style.opacity = 0 + 1 / 30 * scrProc;
-                            } else if (scrProc > 30 && scrProc < 70) {
-                                if (scrProc > 30 && scrProc < 45) qe(".team__content").style.transform = `translateY(${Math.round(h / 1.35 - h / 1.35 / 15 * (scrProc - 30)) + "px"})`; else if (scrProc > 45 && scrProc < 55) qe(".team__content").style.transform = `translateY(0)`; else if (scrProc > 55 && scrProc < 70) qe(".team__content").style.transform = `translateY(${Math.round(0 - h / 1.35 / 15 * (scrProc - 55)) + "px"})`;
+                            } else if (scrProc > 30 && scrProc < 120) {
+                                if (scrProc > 30 && scrProc < 60) {
+                                    qe(".team__content").style.transform = `translateY(${Math.round(h / 1.35 - h / 1.35 / 30 * (scrProc - 30)) + "px"})`;
+                                    qe(".team__content").style.opacity = 0 + 1 / 30 * (scrProc - 30);
+                                } else if (scrProc > 60 && scrProc < 90) {
+                                    qe(".team__content").style.transform = `translateY(0)`;
+                                    qe(".team__content").style.opacity = 1;
+                                } else if (scrProc > 90 && scrProc < 120) {
+                                    qe(".team__content").style.transform = `translateY(${Math.round(0 - h / 1.35 / 30 * (scrProc - 90)) + "px"})`;
+                                    qe(".team__content").style.opacity = 1 - 1 / 30 * (scrProc - 90);
+                                }
                                 qe("#sc8").style.opacity = 1;
-                            } else if (scrProc > 70 && scrProc < 100) qe("#sc8").style.opacity = 1 - 1 / 30 * (scrProc - 70);
+                            } else if (scrProc > 120 && scrProc < 150) qe("#sc8").style.opacity = 1 - 1 / 30 * (scrProc - 120);
+                            console.log(scrProc);
                         }
                         if (scroll > qe("#sc8").parentElement.offsetTop + qe("#sc8").parentElement.offsetHeight && scroll < qe(".footer").offsetTop) {
                             let scr = scroll - qe("#sc9").parentElement.offsetTop;
@@ -4500,10 +4517,10 @@
         (function() {
             var defaultOptions = {
                 frameRate: 150,
-                animationTime: 400,
+                animationTime: 500,
                 stepSize: 40,
                 pulseAlgorithm: true,
-                pulseScale: 4,
+                pulseScale: 3,
                 pulseNormalize: 1,
                 accelerationDelta: 50,
                 accelerationMax: 3,
