@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20220415003324">
+	<link rel="stylesheet" href="css/style.min.css?_v=20220422115340">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,6 +57,7 @@
 
 			.preloader__subtitle svg path {
 				visibility: hidden;
+				opacity: 0;
 			}
 
 			.preloader__load-percent {
@@ -171,7 +172,6 @@
 		</div>
 	</div>
 
-
 	<div style="opacity: 0;" class="wrapper">
 		<header class="header" data-scroll="72">
 			<div class="header__container">
@@ -271,6 +271,7 @@
 			</div>
 		</header>
 		<main class="page">
+			<div id="my-scrollbar"></div>
 			<div class="page__pagination pagination-main">
 				<nav class="pagination-main__container">
 					<ul class="pagination-main__body">
@@ -310,7 +311,7 @@
 						<div class="main-slides__wrapper swiper-wrapper">
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/1.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/1.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/1.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Clinton Hill Loft</h2>
@@ -321,7 +322,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/2.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/2.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/2.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Tribeca Residence</h2>
@@ -332,7 +333,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/3.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/3.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/3.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Queens Apartment</h2>
@@ -343,7 +344,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/4.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/4.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/4.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">West Village Residence</h2>
@@ -354,7 +355,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/5.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/5.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/5.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">OM Juice Bar</h2>
@@ -365,7 +366,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/6.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/6.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/6.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Brooklyn Apartment</h2>
@@ -376,7 +377,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/7.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/7.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/7.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Ceremonia Bakeshop</h2>
@@ -387,7 +388,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/8.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/8.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/8.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Gramercy Park Penthouse</h2>
@@ -398,7 +399,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/9.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/9.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/9.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Prospect Heights Condo</h2>
@@ -409,7 +410,7 @@
 							</div>
 							<div class="main-slides__slide swiper-slide">
 								<div class="main-slides__body">
-									<img class="main-slides__image swiper-lazy" data-src="img/main_slider/10.jpg" alt="image">
+									<picture><source data-srcset="img/main_slider/10.webp" type="image/webp"><img class="main-slides__image swiper-lazy" data-src="img/main_slider/10.jpg" alt="image"></picture>
 									<div class="main-slides__container">
 										<div class="main-slides__content">
 											<h2 class="main-slides__title">Brooklyn Townhouse</h2>
@@ -514,7 +515,7 @@
 			</div>
 			<div id="advantages" class="advantages">
 				<div id="sc6" data-fullscreen class="advantages__wrapper">
-					<img class="advantages__bg" data-src="img/main_slider/1.jpg" alt="main image">
+					<picture><source data-srcset="img/main_slider/1.webp" type="image/webp"><img class="advantages__bg" data-src="img/main_slider/1.jpg" alt="main image"></picture>
 					<div class="advantages__body">
 						<div class="advantages__container">
 							<div class="advantages__box">
@@ -554,7 +555,7 @@
 			</div>
 			<section id="team" class="team">
 				<div id="sc8" data-fullscreen class="team__wrapper">
-					<img class="team__bg" data-src="img/team_main.jpg" alt="team">
+					<picture><source data-srcset="img/team_main.webp" type="image/webp"><img class="team__bg" data-src="img/team_main.jpg" alt="team"></picture>
 					<div class="team__container">
 						<div class="team__body">
 							<h2 class="team__content">SHL Builders consists of individuals with complementary skills, who always work together and achieve unanimous goal of the company -
@@ -721,7 +722,7 @@
 			</div>
 		</footer>
 	</div>
-	<script src="js/app.min.js?_v=20220415003324"></script>
+	<script src="js/app.min.js?_v=20220422115340"></script>
 </body>
 
 </html>
