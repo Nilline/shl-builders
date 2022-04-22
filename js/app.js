@@ -1301,7 +1301,7 @@
                         styles(".wrapper", "", "", "transition");
                     }), 700);
                 }
-            }), 0);
+            }), 1500);
         }
         const sections = document.querySelectorAll(".page [data-fullscreen][id]");
         if (sections.length) {
