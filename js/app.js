@@ -1217,13 +1217,13 @@
         })();
         const indexes = document.querySelectorAll(".preloader__subtitle svg > path");
         if (indexes.length) indexes.forEach(((item, i) => {
-            item.style.opacity = 0;
-            item.style.visibility = "hidden";
             styles(item, "transition-property", "visibility,opacity");
             styles(item, "transition-duration", "200ms");
             styles(item, "transition-delay", `${30 * i + "ms"}`);
-            styles(item, "opacity", 1);
-            styles(item, "visibility", "visible");
+            setTimeout((() => {
+                styles(item, "opacity", 1);
+                styles(item, "visibility", "visible");
+            }), 0);
         }));
         let preloader_images = document.querySelectorAll(".wrapper img"), imagesTotalCount = preloader_images.length, imagesLoadedCount = 0, showPecentLoad = document.querySelector(".preloader__load-percent");
         for (let i = 0; i < imagesTotalCount; i++) {
