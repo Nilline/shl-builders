@@ -1203,11 +1203,11 @@
                 if (1 == options.pulseNormalize) options.pulseNormalize /= pulse_(1);
                 return pulse_(x);
             }
-            var isChrome = /chrome/i.test(window.navigator.userAgent);
-            var isFirefox = /firefox/i.test(window.navigator.userAgent);
+            /chrome/i.test(window.navigator.userAgent);
+            /firefox/i.test(window.navigator.userAgent);
             var wheelEvent = null;
             if ("onwheel" in document.createElement("div")) wheelEvent = "wheel"; else if ("onmousewheel" in document.createElement("div")) wheelEvent = "mousewheel";
-            if (wheelEvent && isChrome || isFirefox) {
+            if (wheelEvent) {
                 window.addEventListener(wheelEvent, wheel, {
                     passive: false
                 });
