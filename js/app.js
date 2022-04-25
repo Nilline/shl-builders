@@ -928,7 +928,10 @@
                 fixedBackground: true,
                 excluded: ""
             };
+            let ua = navigator.userAgent.toLowerCase();
+            if (-1 != ua.indexOf("safari")) if (ua.indexOf("chrome") > -1) ; else defaultOptions.stepSize = 35;
             var options = defaultOptions;
+            console.log(options);
             var isExcluded = false;
             var isFrame = false;
             var direction = {
@@ -1203,8 +1206,6 @@
                 if (1 == options.pulseNormalize) options.pulseNormalize /= pulse_(1);
                 return pulse_(x);
             }
-            /chrome/i.test(window.navigator.userAgent);
-            /firefox/i.test(window.navigator.userAgent);
             var wheelEvent = null;
             if ("onwheel" in document.createElement("div")) wheelEvent = "wheel"; else if ("onmousewheel" in document.createElement("div")) wheelEvent = "mousewheel";
             if (wheelEvent) {
