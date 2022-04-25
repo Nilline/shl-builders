@@ -1217,6 +1217,8 @@
         })();
         const indexes = document.querySelectorAll(".preloader__subtitle svg > path");
         if (indexes.length) indexes.forEach(((item, i) => {
+            item.style.opacity = 0;
+            item.style.visibility = "hidden";
             styles(item, "transition-property", "visibility,opacity");
             styles(item, "transition-duration", "200ms");
             styles(item, "transition-delay", `${30 * i + "ms"}`);
@@ -5819,7 +5821,6 @@
             }
         }
         initSliders();
-        window.addEventListener("load", (function(e) {}));
         var lazyload_min = __webpack_require__(732);
         new lazyload_min({
             elements_selector: "[data-src],[data-srcset]",
